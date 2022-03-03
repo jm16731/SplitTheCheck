@@ -74,15 +74,15 @@ class RestaurantsController < ApplicationController
 
   def next_10
     @session = (session[:offset].to_s.to_i + 10)
-    if @session >= (Restaurant.count - 10).round(-1, half: :down)
-      @session = (Restaurant.count - 10).round(-1, half: :down)
+    if @session >= (Restaurant.count).round(-1, half: :down)
+      @session = (Restaurant.count).round(-1, half: :down)
     end
     session[:offset] = @session
     redirect_to restaurants_url
   end
 
   def last
-    session[:offset] = (Restaurant.count - 10).round(-1, half: :down)
+    session[:offset] = (Restaurant.count).round(-1, half: :down)
     redirect_to restaurants_url
   end
 
