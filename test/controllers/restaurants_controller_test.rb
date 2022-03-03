@@ -48,6 +48,39 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 10, session[:offset]
   end
 
+  test "navigating back & forth works, doesn't overflow, can happen many times" do
+    get restaurants_url
+    assert_nil session[:offset]
+    get last_path
+    assert_equal 10, session[:offset]
+    get first_path
+    assert_equal 0, session[:offset]
+    get first_path
+    assert_equal 0, session[:offset]
+    get next_10_path
+    assert_equal 10, session[:offset]
+    get next_10_path
+    assert_equal 10, session[:offset]
+    get last_path
+    assert_equal 10, session[:offset]
+    get last_path
+    assert_equal 10, session[:offset]
+    get prev_10_path
+    assert_equal 0, session[:offset]
+    get next_10_path
+    assert_equal 10, session[:offset]
+    get prev_10_path
+    assert_equal 0, session[:offset]
+    get prev_10_path
+    assert_equal 0, session[:offset]
+    get first_path
+    assert_equal 0, session[:offset]
+    get prev_10_path
+    assert_equal 0, session[:offset]
+    get next_10_path
+    assert_equal 10, session[:offset]
+  end
+
   test "should get new" do
     get new_restaurant_url
     assert_response :success
