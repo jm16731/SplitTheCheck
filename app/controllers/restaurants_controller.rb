@@ -2,9 +2,22 @@ class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[ show edit update destroy ]
 
   # GET /restaurants or /restaurants.json
+  # Logic for search is thanks to https://medium.com/@rrrachelrath/beginners-guide-to-making-a-ruby-on-rails-search-bar-9e94a9b161d9
   def index
     @restaurants = Restaurant.all.order(:name).
       limit(10).offset(session[:offset])
+
+      =begin
+      if session[:search_by_name] && session[:search_by_name] != ""
+      	@restaurants = @restaurants.where("name like ?",
+      	"%# {session[:search_by_name]} %")
+      end
+
+      if session[:search_by_location] && session[:search_by_location] != ""
+      	@restaurants = @restaurants.where("location like ?",
+      	"%# {session[:search_by_location]} %")
+      end
+      =end
   end
 
   # GET /restaurants/1 or /restaurants/1.json

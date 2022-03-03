@@ -14,6 +14,7 @@
   </thead>
 
   <tbody>
+    <%# view search by https://medium.com/@rrrachelrath/beginners-guide-to-making-a-ruby-on-rails-search-bar-9e94a9b161d9 %>
     <%= form_tag "/search", method: "GET" do %>
     	<%= label_tag :search_by_name %>
     	<%= text_field_tag :search_by_name, session[:search_by_name] %>
