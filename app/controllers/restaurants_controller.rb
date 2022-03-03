@@ -3,7 +3,8 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants or /restaurants.json
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.all.order(:name).
+      limit(10).offset(session[:offset])
   end
 
   # GET /restaurants/1 or /restaurants/1.json
@@ -55,6 +56,34 @@ class RestaurantsController < ApplicationController
       format.html { redirect_to restaurants_url, notice: "Restaurant was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def first
+    session[:offset] = 0
+    redirect_to restaurants_url
+  end
+
+  def prev_10
+    @session = (session[:offset].to_s.to_i - 10)
+    if @session <= 10
+      @session = 0
+    end
+    session[:offset] = (@session)
+    redirect_to restaurants_url
+  end
+
+  def next_10
+    @session = (session[:offset].to_s.to_i + 10)
+    if @session >= (Ripple.count - 10).round(-1, half: :down)
+      @session = (Restaurant.count - 10).round(-1, half: :down)
+    end
+    session[:offset] = @session
+    redirect_to restaurants_url
+  end
+
+  def last
+    session[:offset] = (Restaurant.count - 10).round(-1, half: :down)
+    redirect_to restaurants_url
   end
 
   private
