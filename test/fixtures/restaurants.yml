@@ -1,13 +1,73 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  location: MyString
-  will_split: 1
-  wont_split: 1
+  name: Basil's
+  location: 101 Johnny Mercer Blvd
+  will_split: 7
+  wont_split: 3
 
 two:
-  name: MyString
-  location: MyString
-  will_split: 1
-  wont_split: 1
+  name: Bowtie BBQ
+  location: 98 Somewhere Street
+  will_split: 0
+  wont_split: 7
+
+three:
+  name: Hirano's
+  location: 383 Highway 80
+  will_split: 11
+  wont_split: 0
+
+four:
+  name: William's Seafood
+  location: 578 Highwayyy 80
+  will_split: 1078
+  wont_split: 78
+
+five:
+  name: Papa Murphy's
+  location: 64 Johnny Mercer Blvd
+  will_split: 0
+  wont_split: 0
+
+six:
+  name: Sakura Buffet
+  location: 516 Eisenhower Dr
+  will_split: 89
+  wont_split: 12
+
+seven:
+  name: Wiley's BBQ
+  location: 384  Highway 80
+  will_split: 97
+  wont_split: 97
+
+eight:
+  name: Subway
+  location: 73 Somewhere Plaza
+  will_split: 0
+  wont_split: 83
+
+nine:
+  name: Mrs. Wilk's
+  location: 98 Habersham St
+  will_split: 9876531
+  wont_split: 7
+
+ten:
+  name: Paula Dean's
+  location: 99 Habersham St
+  will_split: 7
+  wont_split: 9876531
+
+elven:
+  name: Fancy Restaurant
+  location: 304 River Dr
+  will_split: 1000
+  wont_split: 0
+
+twelve:
+  name: Troll
+  location: 98 Fake St
+  will_split: 999999
+  wont_split: 999999
