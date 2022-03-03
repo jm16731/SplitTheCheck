@@ -14,6 +14,15 @@
   </thead>
 
   <tbody>
+    <%= form_tag "/search", method: "GET" do %>
+    	<%= label_tag :search_by_name %>
+    	<%= text_field_tag :search_by_name, session[:search_by_name] %>
+
+    	<%= label_tag :search_by_location %>
+    	<%= text_field_tag :search_by_location, session[:search_by_location] %>
+
+    	<%= submit_tag "Search" %>
+    <% end %>
     <% @restaurants.each do |restaurant| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td><%= restaurant.name %></td>
