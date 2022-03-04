@@ -15,6 +15,7 @@
 
   <tbody>
     <%= render 'search' %>
+    <%= link_to 'Clear', clear_path %>
     <% @restaurants.each do |restaurant| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td><%= restaurant.name %></td>

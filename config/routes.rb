@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'next_10' => "restaurants#next_10"
   get 'last' => "restaurants#last"
   get 'search' => "restaurants#search"
+  get 'clear' => "restaurants#clear"
 
   root "restaurants#index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

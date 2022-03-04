@@ -111,7 +111,13 @@ class RestaurantsController < ApplicationController
     else
       session[:search_by_location] = nil
     end
-    
+
+    redirect_to restaurants_url
+  end
+
+  def clear
+    session[:search_by_name] = nil
+    session[:search_by_location] = nil
     redirect_to restaurants_url
   end
 
