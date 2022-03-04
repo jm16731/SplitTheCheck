@@ -7,15 +7,15 @@ class RestaurantsController < ApplicationController
     @restaurants = Restaurant.all.
       order(:name).limit(10).offset(session[:offset])
 
-    if params[:search_by_name] && params[:search_by_name] != ""
+    if session[:search_by_name] && session[:search_by_name] != ""
     	@restaurants = @restaurants.where("name LIKE ?",
-    	   "%#{params[:search_by_name]}%")
+    	   "%#{session[:search_by_name]}%")
       session[:offset] = 0
     end
 
-    if params[:search_by_location] && params[:search_by_location] != ""
+    if session[:search_by_location] && session[:search_by_location] != ""
     	@restaurants = @restaurants.where("location LIKE ?",
-    	   "%#{params[:search_by_location]}%")
+    	   "%#{session[:search_by_location]}%")
       session[:offset] = 0
     end
   end
@@ -96,6 +96,22 @@ class RestaurantsController < ApplicationController
 
   def last
     session[:offset] = (Restaurant.count).round(-1, half: :down)
+    redirect_to restaurants_url
+  end
+
+  def search
+    if params[:search_by_name] && params[:search_by_name] != ""
+      session[:search_by_name] = params[:search_by_name]
+    else
+      session[:search_by_name] = nil
+    end
+
+    if params[:search_by_location] && params[:search_by_location] != ""
+      session[:search_by_location] = params[:search_by_location]
+    else
+      session[:search_by_location] = nil
+    end
+    
     redirect_to restaurants_url
   end
 
