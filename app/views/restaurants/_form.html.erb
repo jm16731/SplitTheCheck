@@ -22,13 +22,11 @@
   </div>
 
   <div class="field">
-    <%= form.label :will_split %>
-    <%= form.number_field :will_split %>
+    <%= form.hidden_field :will_split, :value => 0 %>
   </div>
 
   <div class="field">
-    <%= form.label :wont_split %>
-    <%= form.number_field :wont_split %>
+    <%= form.hidden_field :wont_split, :value => 0 %>
   </div>
 
   <div class="actions">
