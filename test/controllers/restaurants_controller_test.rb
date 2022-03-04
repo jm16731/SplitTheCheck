@@ -172,6 +172,27 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_nil session[:search_by_location]
   end
 
+  test "should get clear" do
+    get clear_path
+    assert_redirected_to restaurants_url
+    #assert_select "h1", "Restaurants"
+  end
+
+  test "clear should clear search variables" do
+    get search_path, params: {
+      search_by_name: "BBQ",
+      search_by_location: "Johnny Mercer Blvd"
+    }
+    assert_equal "BBQ", session[:search_by_name]
+    assert_equal "Johnny Mercer Blvd", session[:search_by_location]
+
+    get clear_path
+    assert_nil session[:search_by_name]
+    assert_nil session[:search_by_location]
+    assert_redirected_to restaurants_url
+    #assert_select "h1", "Restaurants"
+  end
+
   test "multiple searches work" do
     get search_path, params: {
       search_by_name: "BBQ",
