@@ -1,25 +1,19 @@
 <p id="notice"><%= notice %></p>
 
+<h1>Split the Check</h1>
+
 <p>
-  <strong>Name:</strong>
-  <%= @restaurant.name %>
+  Does <em><%= @restaurant.name %></em>,
+  at <em><%= @restaurant.location %></em>,
+  <strong>Split the Check</strong>?
 </p>
 
 <p>
-  <strong>Location:</strong>
-  <%= @restaurant.location %>
-</p>
-
-<h1>Splits the Check</h1>
-
-<p>
-  <strong>Will split:</strong>
-  <%= @restaurant.will_split %>
+  <strong>Yes: </strong><%= @restaurant.will_split %>
 </p>
 
 <p>
-  <strong>Wont split:</strong>
-  <%= @restaurant.wont_split %>
+  <strong>No: </strong><%= @restaurant.wont_split %>
 </p>
 
 <%= link_to 'Back', restaurants_path %>
