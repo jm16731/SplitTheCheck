@@ -59,12 +59,12 @@ class RestaurantsController < ApplicationController
 
   def thumbs_up
   	@restaurant.thumbs_up
-  	redirect_to restaurant_url
+  	redirect_to restaurants_url
   end
 
   def thumbs_down
   	@restaurant.thumbs_down
-  	redirect_to restaurant_url
+  	redirect_to restaurants_url
   end
 
   # DELETE /restaurants/1 or /restaurants/1.json
