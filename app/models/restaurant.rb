@@ -1,7 +1,7 @@
 class Restaurant < ApplicationRecord
   validates :name, :location, :will_split, :wont_split, presence: true
   validates :will_split, :wont_split, numericality: {
-    greater_than_or_equal_to: -1
+    greater_than_or_equal_to: 0
   }
 
   #scope logic by https://www.justinweiss.com/articles/search-and-filter-rails-models-without-bloating-your-controller/
