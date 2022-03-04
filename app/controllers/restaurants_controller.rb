@@ -7,14 +7,12 @@ class RestaurantsController < ApplicationController
     @restaurants = Restaurant.all.
       order(:name).limit(10).offset(session[:offset])
 
-    if session[:search_by_name] && session[:search_by_name] != ""
-    	@restaurants = @restaurants.where("name LIKE ?",
-    	   "%#{session[:search_by_name]}%")
+    if session[:search_by_name].present?
+      @restaurants = @restaurants.search_by_name(session[:search_by_name])
     end
 
-    if session[:search_by_location] && session[:search_by_location] != ""
-    	@restaurants = @restaurants.where("location LIKE ?",
-    	   "%#{session[:search_by_location]}%")
+    if session[:search_by_location].present?
+    	@restaurants = @restaurants.search_by_location(session[:search_by_location])
     end
   end
 
