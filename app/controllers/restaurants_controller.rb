@@ -10,14 +10,14 @@ class RestaurantsController < ApplicationController
     if session[:search_by_name] && session[:search_by_name] != ""
     	@restaurants = @restaurants.where("name LIKE ?",
     	   "%#{session[:search_by_name]}%")
-      session[:offset] = 0
     end
 
     if session[:search_by_location] && session[:search_by_location] != ""
     	@restaurants = @restaurants.where("location LIKE ?",
     	   "%#{session[:search_by_location]}%")
-      session[:offset] = 0
     end
+
+    #@restaurants = @restaurants.order(:name).limit(10).offset(session[:offset])
   end
 
   # GET /restaurants/1 or /restaurants/1.json
@@ -100,6 +100,8 @@ class RestaurantsController < ApplicationController
   end
 
   def search
+    session[:offset] = 0
+
     if params[:search_by_name] && params[:search_by_name] != ""
       session[:search_by_name] = params[:search_by_name]
     else
