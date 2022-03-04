@@ -20,7 +20,7 @@ three:
 
 four:
   name: William's Seafood
-  location: 578 Highwayyy 80
+  location: 578 Highway 80
   will_split: 1078
   wont_split: 78
 
@@ -38,7 +38,7 @@ six:
 
 seven:
   name: Wiley's BBQ
-  location: 384  Highway 80
+  location: 384 Highway 80
   will_split: 97
   wont_split: 97
 

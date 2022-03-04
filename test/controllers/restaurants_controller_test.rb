@@ -5,6 +5,10 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     @restaurant = restaurants(:one)
   end
 
+  teardown do
+    Rails.cache.clear
+  end
+
   test "should be 12 restaurants" do
     assert_equal 12, Restaurant.count
   end
@@ -130,4 +134,77 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to restaurants_url
   end
+
+  test "should get search" do
+    get search_path
+    assert_redirected_to restaurants_url
+  end
+
+  test "search should assign search variables if provided in params" do
+    get search_path
+    assert_nil session[:search_by_name]
+    assert_nil session[:search_by_location]
+
+    get search_path, params: {
+      search_by_name: "BBQ",
+      search_by_location: "Johnny Mercer Blvd"
+    }
+    assert_equal "BBQ", session[:search_by_name]
+    assert_equal "Johnny Mercer Blvd", session[:search_by_location]
+  end
+
+  test "should find zero restaurant with BBQ, Johnny Mercer Blvd" do
+    get search_path, params: {
+      search_by_name: "BBQ",
+      search_by_location: "Johnny Mercer Blvd"
+    }
+
+    assert 0, Restaurant.all.
+    	order(:name).limit(10).offset(0).
+    	where("name like 'BBQ'").
+    	where("location like 'Johnny Mercer Blvd'").count
+
+    assert_select "tr", 0
+  end
+
+  test "should find one restaurant with BBQ, Highway 80" do
+    get search_path, params: {
+      search_by_name: "BBQ",
+      search_by_location: "Highway 80"
+    }
+
+    assert 1, Restaurant.all.
+      order(:name).limit(10).offset(0).
+      where("name like 'BBQ'").
+      where("location like 'Highway 80'").count
+
+    assert_select "tr", 1
+  end
+
+  test "should find three restaurants on Highway 80" do
+    get search_path, params: {
+      search_by_name: nil,
+      search_by_location: "Highway 80"
+    }
+
+    assert 3, Restaurant.all.
+      order(:name).limit(10).offset(0).
+      where("location like 'Highway 80'").count
+
+    assert_select "tr", 3
+  end
+
+  test "should find two restaurants with BBQ" do
+    get search_path, params: {
+      search_by_name: "BBQ",
+      search_by_location: nil
+    }
+
+    assert 2, Restaurant.all.
+      order(:name).limit(10).offset(0).
+      where("name like 'BBQ'").count
+      
+    assert_select "tr", 2
+  end
+
 end

@@ -16,8 +16,6 @@ class RestaurantsController < ApplicationController
     	@restaurants = @restaurants.where("location LIKE ?",
     	   "%#{session[:search_by_location]}%")
     end
-
-    #@restaurants = @restaurants.order(:name).limit(10).offset(session[:offset])
   end
 
   # GET /restaurants/1 or /restaurants/1.json

@@ -2,6 +2,9 @@
 
 <h1>Restaurants</h1>
 
+<%= render 'search' %>
+<%= link_to 'Clear', clear_path %>
+
 <table>
   <thead>
     <tr>
@@ -14,8 +17,6 @@
   </thead>
 
   <tbody>
-    <%= render 'search' %>
-    <%= link_to 'Clear', clear_path %>
     <% @restaurants.each do |restaurant| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td><%= restaurant.name %></td>
@@ -23,6 +24,7 @@
         <td><%= restaurant.will_split %></td>
         <td><%= restaurant.wont_split %></td>
         <td><%= link_to 'Show', restaurant %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>
