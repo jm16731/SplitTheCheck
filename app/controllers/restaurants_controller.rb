@@ -57,6 +57,16 @@ class RestaurantsController < ApplicationController
     end
   end
 
+  def thumbs_up
+  	@restaurant.thumbs_up
+  	redirect_to restaurant_url
+  end
+
+  def thumbs_down
+  	@restaurant.thumbs_down
+  	redirect_to restaurant_url
+  end
+
   # DELETE /restaurants/1 or /restaurants/1.json
   def destroy
     @restaurant.destroy

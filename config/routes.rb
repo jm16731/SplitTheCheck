@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'last' => "restaurants#last"
   get 'search' => "restaurants#search"
   get 'clear' => "restaurants#clear"
+  get 'thumbs_up' => "restaurants@thumbs_up"
+  get 'thumbs_down' => "restaurants@thumbs_down"
 
   root "restaurants#index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
