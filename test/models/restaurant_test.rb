@@ -49,6 +49,7 @@ class RestaurantTest < ActiveSupport::TestCase
     assert restaurant.valid?
   end
 
+
   test "thumbs up" do
     @restaurant.thumbs_up
     assert_equal 8, @restaurant.will_split
