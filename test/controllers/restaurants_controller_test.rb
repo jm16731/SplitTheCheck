@@ -137,19 +137,23 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to restaurants_url
   end
 
-  test "should get thumbs_up" do
-    patch thumbs_up_path params: {
+=begin
+  test "thumbs_up should redirect and increase" do
+    patch thumbs_up_path(@restaurant), params: {
       id: 1
     }
     assert_redirected_to restaurants_url
+    assert_equal 8, @restaurant.will_split
   end
 
-  test "should get thumbs_down" do
-    patch thumbs_down_path params: {
+  test "thumbs_down should redirect and increase" do
+    patch thumbs_down_path(@restaurant),  params: {
       id: 1
     }
     assert_redirected_to restaurants_url
+    assert_equal 4, @restaurant.wont_split
   end
+=end
 
   test "should get search" do
     get search_path
