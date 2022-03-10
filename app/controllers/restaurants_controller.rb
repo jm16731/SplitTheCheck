@@ -105,6 +105,7 @@ class RestaurantsController < ApplicationController
     redirect_to restaurants_url
   end
 
+=begin
   def search
     session[:offset] = 0
 
@@ -121,6 +122,21 @@ class RestaurantsController < ApplicationController
     end
 
     redirect_to restaurants_url
+  end
+=end
+
+  def search
+    @restaurants = Restaurant.all.order(:name)
+
+    if params[:search_by_name].present?
+      @restaurants = @restaurants.search_by_name(params[:search_by_name])
+    end
+
+    if params[:search_by_location].present?
+      @restaurants = @restaurants.search_by_location(params[:search_by_location])
+    end
+
+    render "index"
   end
 
   def clear
