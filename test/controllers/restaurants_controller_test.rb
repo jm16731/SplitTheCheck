@@ -224,19 +224,33 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table tbody tr", count: 2
   end
 
-  test "multiple searches work" do
+  test "multiple searches work, including with navigation" do
     get search_path, params: {
-      search_by_name: "BBQ",
-      search_by_location: "Johnny Mercer Blvd"
+      search_by_name: "Wiley",
+      search_by_location: "384 Highway 80"
     }
 
     assert_template :index
+    assert 1, Restaurant.all.
+      order(:name).where("name like 'Wiley'").
+      where("location like '384 Highway 80'").count
+    assert_select "table tbody tr", count: 1
+
+    get last_path
+    get first_path
+    get first_path
+    get next_10_path
+    get next_10_path
+    get last_path
 
     get search_path, params: {
-      search_by_name: "BBQ",
-      search_by_location: "Highway 80"
+      search_by_name: "S",
+      search_by_location: nil
     }
 
     assert_template :index
+    assert 2, Restaurant.all.
+      order(:name).where("name like 'S'").count
+    assert_select "table tbody tr", count: 2
   end
 end
