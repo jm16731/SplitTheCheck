@@ -16,4 +16,9 @@
   <strong>No: </strong><%= @restaurant.wont_split %>
 </p>
 
+<td><%= link_to image_tag("thumbs_up.png", width: 20),
+  thumbs_up_path(:id => @restaurant.id), :method => :patch %></td>
+<td><%= link_to image_tag("thumbs_down.jpg", width: 20),
+  thumbs_down_path(:id => @restaurant.id), :method => :patch %></td>
+
 <%= link_to 'Back', restaurants_path %>
