@@ -6,14 +6,6 @@ class RestaurantsController < ApplicationController
   def index
     @restaurants = Restaurant.all.
       order(:name).limit(10).offset(session[:offset])
-
-    if session[:search_by_name].present?
-      @restaurants = @restaurants.search_by_name(session[:search_by_name])
-    end
-
-    if session[:search_by_location].present?
-    	@restaurants = @restaurants.search_by_location(session[:search_by_location])
-    end
   end
 
   # GET /restaurants/1 or /restaurants/1.json
@@ -140,8 +132,6 @@ class RestaurantsController < ApplicationController
   end
 
   def clear
-    session[:search_by_name] = nil
-    session[:search_by_location] = nil
     redirect_to restaurants_url
   end
 

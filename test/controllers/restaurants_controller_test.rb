@@ -137,87 +137,41 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to restaurants_url
   end
 
+  test "should get thumbs_up" do
+    patch thumbs_up_path params: {
+      id: 1
+    }
+    assert_redirected_to restaurants_url
+  end
+
+  test "should get thumbs_down" do
+    patch thumbs_down_path params: {
+      id: 1
+    }
+    assert_redirected_to restaurants_url
+  end
+
   test "should get search" do
     get search_path
-    assert_redirected_to restaurants_url
+    assert_template :index
     assert_select "h1", "Restaurants"
-  end
-
-  test "search should assign search variables if provided in params" do
-    get search_path
-    assert_nil session[:search_by_name]
-    assert_nil session[:search_by_location]
-
-    get search_path, params: {
-      search_by_name: "BBQ",
-      search_by_location: "Johnny Mercer Blvd"
-    }
-    assert_equal "BBQ", session[:search_by_name]
-    assert_equal "Johnny Mercer Blvd", session[:search_by_location]
-  end
-
-  test "search should remove variables if no params provided" do
-    get search_path, params: {
-      search_by_name: "BBQ",
-      search_by_location: "Johnny Mercer Blvd"
-    }
-    assert_equal "BBQ", session[:search_by_name]
-    assert_equal "Johnny Mercer Blvd", session[:search_by_location]
-
-    get search_path, params: {
-      search_by_name: nil,
-      search_by_location: nil
-    }
-    assert_nil session[:search_by_name]
-    assert_nil session[:search_by_location]
   end
 
   test "should get clear" do
     get clear_path
     assert_redirected_to restaurants_url
-    #assert_select "h1", "Restaurants"
   end
 
-  test "clear should clear search variables" do
-    get search_path, params: {
-      search_by_name: "BBQ",
-      search_by_location: "Johnny Mercer Blvd"
-    }
-    assert_equal "BBQ", session[:search_by_name]
-    assert_equal "Johnny Mercer Blvd", session[:search_by_location]
-
-    get clear_path
-    assert_nil session[:search_by_name]
-    assert_nil session[:search_by_location]
-    assert_redirected_to restaurants_url
-    #assert_select "h1", "Restaurants"
-  end
-
-  test "multiple searches work" do
-    get search_path, params: {
-      search_by_name: "BBQ",
-      search_by_location: "Johnny Mercer Blvd"
-    }
-    assert_equal "BBQ", session[:search_by_name]
-    assert_equal "Johnny Mercer Blvd", session[:search_by_location]
-
-    get search_path, params: {
-      search_by_name: "BBQ",
-      search_by_location: "Highway 80"
-    }
-    assert_equal "BBQ", session[:search_by_name]
-    assert_equal "Highway 80", session[:search_by_location]
-  end
-=begin
   test "should find zero restaurant with BBQ, Johnny Mercer Blvd" do
     get search_path, params: {
       search_by_name: "BBQ",
       search_by_location: "Johnny Mercer Blvd"
     }
 
+    assert_template :index
+
     assert 0, Restaurant.all.
-    	order(:name).limit(10).offset(0).
-    	where("name like 'BBQ'").
+    	order(:name).where("name like 'BBQ'").
     	where("location like 'Johnny Mercer Blvd'").count
 
     assert_select "table tbody tr", count: 0
@@ -225,44 +179,60 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should find one restaurant with BBQ, Highway 80" do
     get search_path, params: {
-      search_by_name: "BBQ",
-      search_by_location: "Highway 80"
+      search_by_name: "Wiley",
+      search_by_location: "384 Highway 80"
     }
 
-    assert_redirected_to restaurants_url
+    assert_template :index
 
     assert 1, Restaurant.all.
-      order(:name).limit(10).offset(0).
-      where("name like 'BBQ'").
-      where("location like 'Highway 80'").count
+      order(:name).where("name like 'Wiley'").
+      where("location like '384 Highway 80'").count
 
     assert_select "table tbody tr", count: 1
   end
 
-  test "should find three restaurants on Highway 80" do
+  test "should find three restaurants with location starting with 98" do
     get search_path, params: {
       search_by_name: nil,
-      search_by_location: "Highway 80"
+      search_by_location: "98"
     }
 
+    assert_template :index
+
     assert 3, Restaurant.all.
-      order(:name).limit(10).offset(0).
-      where("location like 'Highway 80'").count
+      order(:name).where("location like '98'").count
 
     assert_select "table tbody tr", count: 3
   end
 
-  test "should find two restaurants with BBQ" do
+  test "should find two restaurants with S" do
     get search_path, params: {
-      search_by_name: "BBQ",
+      search_by_name: "S",
       search_by_location: nil
     }
 
+    assert_template :index
+
     assert 2, Restaurant.all.
-      order(:name).limit(10).offset(0).
-      where("name like 'BBQ'").count
+      order(:name).where("name like 'S'").count
 
     assert_select "table tbody tr", count: 2
   end
-=end
+
+  test "multiple searches work" do
+    get search_path, params: {
+      search_by_name: "BBQ",
+      search_by_location: "Johnny Mercer Blvd"
+    }
+
+    assert_template :index
+
+    get search_path, params: {
+      search_by_name: "BBQ",
+      search_by_location: "Highway 80"
+    }
+
+    assert_template :index
+  end
 end

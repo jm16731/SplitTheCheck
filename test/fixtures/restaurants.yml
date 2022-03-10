@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: Basil's
   location: 101 Johnny Mercer Blvd
   will_split: 7
