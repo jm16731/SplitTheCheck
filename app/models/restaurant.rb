@@ -12,13 +12,11 @@ class Restaurant < ApplicationRecord
 
 
   def thumbs_up
-    self.will_split = self.will_split + 1
-    self.save!()
+    update_attribute(:will_split, will_split + 1)
   end
 
   def thumbs_down
-    self.wont_split = self.wont_split + 1
-    self.save!()
+    update_attribute(:wont_split, wont_split + 1)
   end
 
 end
