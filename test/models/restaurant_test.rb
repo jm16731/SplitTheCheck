@@ -1,23 +1,20 @@
 require "test_helper"
 
 class RestaurantTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
 
   setup do
     @restaurant = restaurants(:one)
   end
 
-=begin
-  def new_restaurant
-    Restaurant.new(
+  test "restaurant is valid if attributes exist and splits are non-negative" do
+    restaurant = Restaurant.new(
         name: "Greg's Random Slop",
         location: "10 Falligant Ave",
         will_split: 1,
         wont_split: 0
+      )
+    assert restaurant.valid?
   end
-=end
 
   test "restaurant attributes must not be empty" do
     restaurant = Restaurant.new
