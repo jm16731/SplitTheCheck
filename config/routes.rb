@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'clear' => "restaurants#clear"
   patch 'thumbs_up' => "restaurants#thumbs_up"
   patch 'thumbs_down' => "restaurants#thumbs_down"
+  patch 'thumbs_up/:id' => "restaurants#thumbs_up"
+  patch 'thumbs_down/:id' => "restaurants#thumbs_down"
 
   root "restaurants#index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
