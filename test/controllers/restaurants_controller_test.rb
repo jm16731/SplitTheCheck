@@ -220,7 +220,6 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert @restaurant.wont_split = 3
   end
 
-=begin
   test "should destroy restaurant" do
     assert_difference('Restaurant.count', -1) do
       delete restaurant_url(@restaurant)
@@ -229,18 +228,19 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to restaurants_url
   end
 
+=begin
   test "thumbs_up should redirect and increase" do
     patch thumbs_up_path(@restaurant.id)
     assert_redirected_to restaurants_url
     assert_equal 8, @restaurant.will_split
   end
-=end
 
   test "thumbs_down should redirect and increase" do
     patch thumbs_down_path(@restaurant.id)
     assert_redirected_to restaurants_url
     assert_equal 4, @restaurant.wont_split
   end
+=end
 
   test "should get search" do
     get search_path
