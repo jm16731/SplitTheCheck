@@ -127,12 +127,12 @@ class RestaurantsController < ApplicationController
 
   def thumbs_up
     @restaurant.thumbs_up
-    redirect_to restaurants_url
+    redirect_to restaurants_url, notice: "Thank you for informing us of who splits the check"
   end
 
   def thumbs_down
     @restaurant.thumbs_down
-    redirect_to restaurants_url
+    redirect_to restaurants_url, notice: "Thank you for informing us of those who refuse to split the check"
   end
 
   private
