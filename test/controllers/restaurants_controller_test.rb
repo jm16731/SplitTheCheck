@@ -229,15 +229,45 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "thumbs_up should redirect and increase" do
-    patch thumbs_up_path(@restaurant.id)
+    patch thumbs_up_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 8, @restaurant.will_split
+    assert_equal 8, @restaurant.reload.will_split
   end
 
   test "thumbs_down should redirect and increase" do
-    patch thumbs_down_path(@restaurant.id)
+    patch thumbs_down_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 4, @restaurant.wont_split
+    assert_equal 4, @restaurant.reload.wont_split
+  end
+
+  test "repeated thumbs_up / thumbs_down works as expected" do
+    patch thumbs_up_path(:id => @restaurant.id)
+    assert_redirected_to restaurants_url
+    assert_equal 8, @restaurant.reload.will_split
+
+    patch thumbs_down_path(:id => @restaurant.id)
+    assert_redirected_to restaurants_url
+    assert_equal 4, @restaurant.reload.wont_split
+
+    patch thumbs_up_path(:id => @restaurant.id)
+    assert_redirected_to restaurants_url
+    assert_equal 9, @restaurant.reload.will_split
+
+    patch thumbs_up_path(:id => @restaurant.id)
+    assert_redirected_to restaurants_url
+    assert_equal 10, @restaurant.reload.will_split
+
+    patch thumbs_up_path(:id => @restaurant.id)
+    assert_redirected_to restaurants_url
+    assert_equal 11, @restaurant.reload.will_split
+
+    patch thumbs_down_path(:id => @restaurant.id)
+    assert_redirected_to restaurants_url
+    assert_equal 5, @restaurant.reload.wont_split
+
+    patch thumbs_down_path(:id => @restaurant.id)
+    assert_redirected_to restaurants_url
+    assert_equal 6, @restaurant.reload.wont_split
   end
 
   test "should get search" do
