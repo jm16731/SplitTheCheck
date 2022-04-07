@@ -26,7 +26,7 @@ jthomas.name = "JThomas"
 jthomas.location = "Highway 80"
 jthomas.save!
 
-miyabi = Restaraunt.new
+miyabi = Restaurant.new
 miyabi.name = "Miyabi's"
 miyabi.location = "Eisenhower Dr"
 miyabi.save!
@@ -73,7 +73,7 @@ harris.save!
 
 vinnie = Restaurant.new
 vinnie.name = "Vinnie Van Go-Go's"
-vinne.location = "W Bryan St"
+vinnie.location = "W Bryan St"
 vinnie.save!
 
 pie = Restaurant.new
@@ -83,14 +83,14 @@ pie.save!
 
 user_one = User.new
 user_one.email = 'test@example.com'
-user_one.password = 'test'
-user_one.password_confirmation = 'test'
+user_one.password = 'testing'
+user_one.password_confirmation = 'testing'
 user_one.save!
 
 user_two = User.new
 user_two.email = 'example@example.com'
-user_two.password = 'rofl'
-user_two.password_confirmation = 'rofl'
+user_two.password = 'roflol'
+user_two.password_confirmation = 'roflol'
 user_two.save!
 
 user_admin = User.new
