@@ -3,5 +3,105 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+#   movies = Movie.create(
+#      [
+#        { name: 'Star Wars' },
+#        { name: 'Lord of the Rings' }
+#      ]
+#    )
 #   Character.create(name: 'Luke', movie: movies.first)
+
+wileys = Restaurant.new
+wileys.name = "Wiley's BBQ"
+wileys.location = "Highway 80"
+wileys.save!
+
+kakki = Restaurant.new
+kakki.name = "Kakki's"
+kakki.location = "Highway 80"
+kakki.save!
+
+jthomas = Restaurant.new
+jthomas.name = "JThomas"
+jthomas.location = "Highway 80"
+jthomas.save!
+
+miyabi = Restaraunt.new
+miyabi.name = "Miyabi's"
+miyabi.location = "Eisenhower Dr"
+miyabi.save!
+
+basil = Restaurant.new
+basil.name = "Basil's"
+basil.location = "Johnny Mercer Blvd"
+basil.save!
+
+papamurphy = Restaurant.new
+papamurphy.name = "Papa Murphy's"
+papamurphy.location = "Johnny Mercer Blvd"
+papamurphy.save!
+
+paula = Restaurant.new
+paula.name = "The Lady & Sons"
+paula.location = "W Congress St"
+paula.save!
+
+seafood = Restaurant.new
+seafood.name = "Creek House Seafood & Grill"
+seafood.location = "Bryan Woods Rd"
+seafood.save!
+
+curry = Restaurant.new
+curry.name = "Himalayan Curry Kitchen"
+curry.location = "Ford Ave"
+curry.save!
+
+sakura = Restaurant.new
+sakura.name = "Sakura Buffet"
+sakura.location = "Eisenhower Dr"
+sakura.save!
+
+soup = Restaurant.new
+soup.name = "Wattana Panic"
+soup.location = "Bangkok"
+soup.save!
+
+harris = Restaurant.new
+harris.name = "Johnny Harris"
+harris.location = "East Victory Dr"
+harris.save!
+
+vinnie = Restaurant.new
+vinnie.name = "Vinnie Van Go-Go's"
+vinne.location = "W Bryan St"
+vinnie.save!
+
+pie = Restaurant.new
+pie.name = "Pie Society"
+pie.location = "Jefferson St"
+pie.save!
+
+user_one = User.new
+user_one.email = 'test@example.com'
+user_one.password = 'test'
+user_one.password_confirmation = 'test'
+user_one.save!
+
+user_two = User.new
+user_two.email = 'example@example.com'
+user_two.password = 'rofl'
+user_two.password_confirmation = 'rofl'
+user_two.save!
+
+user_admin = User.new
+user_admin.email = 'jmurrel1@my.westga.edu'
+user_admin.password = 'leaked'
+user_admin.password_confirmation = 'leaked'
+user_admin.save!
+
+vote_admin_wileys = Vote.new
+vote_admin_wileys.restaurant = "Wiley's BBQ"
+vote_admin_wileys.user = "jmurrel1@my.westga.edu"
+vote_admin_wileys.split = true
+vote_admin_wileys.time = Time.current
+vote_admin_wileys.save!
