@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :votes
+  devise_for :users
   resources :restaurants
 
   get 'first' => "restaurants#first"
