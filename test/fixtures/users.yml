@@ -12,4 +12,8 @@ two: {}
 
 admin:
   email: 'jmurrel1@my.westga.edu'
-  encrypted_password: 'm'
+  encrypted_password: 'mX$%ty0il'
+
+test:
+  email: 'test@example.com'
+  encrypted_password: 'l87#pol56'
