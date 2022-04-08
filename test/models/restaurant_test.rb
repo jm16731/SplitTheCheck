@@ -6,6 +6,14 @@ class RestaurantTest < ActiveSupport::TestCase
     @restaurant = restaurants(:one)
   end
 
+  test "restaurant attributes must not be empty" do
+    restaurant = Restaurant.new
+    assert restaurant.invalid?
+    assert restaurant.errors[:name].any?
+    assert restaurant.errors[:location].any?
+  end
+
+=begin
   test "restaurant is valid if attributes exist and splits are non-negative" do
     restaurant = Restaurant.new(
         name: "Greg's Random Slop",
@@ -14,15 +22,6 @@ class RestaurantTest < ActiveSupport::TestCase
         wont_split: 0
       )
     assert restaurant.valid?
-  end
-
-  test "restaurant attributes must not be empty" do
-    restaurant = Restaurant.new
-    assert restaurant.invalid?
-    assert restaurant.errors[:name].any?
-    assert restaurant.errors[:location].any?
-    assert restaurant.errors[:will_split].any?
-    assert restaurant.errors[:wont_split].any?
   end
 
   test "restaurant splits cannot be negative" do
@@ -70,4 +69,5 @@ class RestaurantTest < ActiveSupport::TestCase
     assert_equal 11, @restaurant.will_split
     assert_equal 6, @restaurant.wont_split
   end
+=end
 end
