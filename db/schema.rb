@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_08_185005) do
+ActiveRecord::Schema.define(version: 2022_04_08_190211) do
 
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
@@ -35,6 +35,12 @@ ActiveRecord::Schema.define(version: 2022_04_08_185005) do
     t.boolean "split"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "restaurant_id"
+    t.integer "user_id"
+    t.index ["restaurant_id"], name: "index_votes_on_restaurant_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
+  add_foreign_key "votes", "restaurants"
+  add_foreign_key "votes", "users"
 end
