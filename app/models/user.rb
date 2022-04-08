@@ -7,4 +7,7 @@ class User < ApplicationRecord
 
   has_many :votes
   has_many :restaurants, through: :votes
+
+  scope :search_by_user,
+    -> (email) { where("email like ?", "#{email}%") }
 end
