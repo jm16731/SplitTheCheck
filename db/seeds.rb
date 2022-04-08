@@ -11,6 +11,8 @@
 #    )
 #   Character.create(name: 'Luke', movie: movies.first)
 
+require 'faker'
+
 wileys = Restaurant.new
 wileys.name = "Wiley's BBQ"
 wileys.location = "Highway 80"
@@ -81,6 +83,13 @@ pie.name = "Pie Society"
 pie.location = "Jefferson St"
 pie.save!
 
+85.times do
+  Restaurant.create!(
+    name: Faker::Restaurant.name,
+    location: Faker::Address.unique.full_address
+  )
+end
+
 user_one = User.new
 user_one.email = 'test@example.com'
 user_one.password = 'testing'
@@ -98,6 +107,13 @@ user_admin.email = 'jmurrel1@my.westga.edu'
 user_admin.password = 'leaked'
 user_admin.password_confirmation = 'leaked'
 user_admin.save!
+
+43.times do
+  User.create!(
+    email: Faker::Internet.unique.email,
+    encrypted_password: Faker::Internet.password(min_length: 6)
+  )
+end
 
 =begin
 vote_admin_wileys = Vote.new
