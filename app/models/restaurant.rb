@@ -25,10 +25,16 @@ class Restaurant < ApplicationRecord
 
   def total_thumbs_up
     0
+    =begin
+      Vote.total_thumbs_up(this.id)
+    =end
   end
 
   def total_thumbs_down
     0
+    =begin
+      Vote.total_thumbs_down(this.id)
+    =end
   end
 
 end
