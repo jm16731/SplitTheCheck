@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :timeoutable
 
-  has_many :votes
+  has_many :votes, dependent: :destroy
   has_many :restaurants, through: :votes
 
   scope :search_by_user,

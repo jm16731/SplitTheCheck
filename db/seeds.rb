@@ -99,8 +99,10 @@ user_admin.password = 'leaked'
 user_admin.password_confirmation = 'leaked'
 user_admin.save!
 
+=begin
 vote_admin_wileys = Vote.new
 vote_admin_wileys.restaurant = "Wiley's BBQ"
 vote_admin_wileys.user = "jmurrel1@my.westga.edu"
 vote_admin_wileys.split = true
 vote_admin_wileys.save!
+=end
