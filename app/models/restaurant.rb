@@ -23,4 +23,12 @@ class Restaurant < ApplicationRecord
   #  update_attribute(:wont_split, wont_split + 1)
   #end
 
+  def total_thumbs_up
+    0
+  end
+
+  def total_thumbs_down
+    0
+  end
+
 end
