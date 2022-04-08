@@ -1,4 +1,7 @@
 class Restaurant < ApplicationRecord
+  has_many :votes
+  has_many :users, through: :votes
+
   validates :name, :location, presence: true
   #validates :will_split, :wont_split, presence: true
   #validates :will_split, :wont_split, numericality: {
