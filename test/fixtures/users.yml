@@ -9,3 +9,7 @@ one: {}
 #
 two: {}
 # column: value
+
+admin:
+  email: 'jmurrel1@my.westga.edu'
+  encrypted_password: 'm'

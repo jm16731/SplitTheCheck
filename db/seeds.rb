@@ -103,5 +103,4 @@ vote_admin_wileys = Vote.new
 vote_admin_wileys.restaurant = "Wiley's BBQ"
 vote_admin_wileys.user = "jmurrel1@my.westga.edu"
 vote_admin_wileys.split = true
-vote_admin_wileys.time = Time.current
 vote_admin_wileys.save!

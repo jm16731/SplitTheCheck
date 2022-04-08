@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  restaurant: MyString
-  user: MyString
-  split: false
+  restaurant: Basil's
+  user: 'jmurrel1@my.westga.edu'
+  split: true
   time: 2022-04-07 18:21:32
 
 two:
-  restaurant: MyString
-  user: MyString
-  split: false
-  time: 2022-04-07 18:21:32
+  restaurant: Basil's
+  user: 'jmurrel1@my.westga.edu'
+  split: true
+  time: 2022-04-07 18:21:33
