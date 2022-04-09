@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :timeoutable
 
-  has_many :votes, dependent: :destroy
-  has_many :restaurants, through: :votes
+  has_many :vote, dependent: :destroy
+  has_many :restaurant, through: :vote
 
   scope :search_by_user,
     -> (email) { where("email like ?", "#{email}%") }

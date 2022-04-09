@@ -1,6 +1,6 @@
 class Restaurant < ApplicationRecord
-  has_many :votes, dependent: :destroy
-  has_many :users, through: :votes
+  has_many :vote, dependent: :destroy
+  has_many :user, through: :vote
 
   validates :name, :location, presence: true
   #validates :will_split, :wont_split, presence: true
@@ -25,16 +25,12 @@ class Restaurant < ApplicationRecord
 
   def total_thumbs_up
     0
-    =begin
-      Vote.total_thumbs_up(this.id)
-    =end
+    #Vote.total_thumbs_up(this.id)
   end
 
   def total_thumbs_down
     0
-    =begin
-      Vote.total_thumbs_down(this.id)
-    =end
+    #Vote.total_thumbs_down(this.id)
   end
 
 end

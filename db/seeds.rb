@@ -108,17 +108,23 @@ user_admin.password = 'leaked'
 user_admin.password_confirmation = 'leaked'
 user_admin.save!
 
-43.times do
-  User.create!(
-    email: Faker::Internet.unique.email,
-    encrypted_password: Faker::Internet.password(min_length: 6)
-  )
-end
+#vote_admin_wileys = Vote.new
+#vote_admin_wileys.split = true
+#vote_admin_wileys.restaurant_id = wileys.id
+#vote_admin_wileys.user_id = user_admin.id
+#vote_admin_wileys.save!
+
+Vote.create!(
+  split: true,
+  restaurant_id: wileys.id,
+  user_id: user_admin.id
+)
 
 =begin
-vote_admin_wileys = Vote.new
-vote_admin_wileys.restaurant = "Wiley's BBQ"
-vote_admin_wileys.user = "jmurrel1@my.westga.edu"
-vote_admin_wileys.split = true
-vote_admin_wileys.save!
+  43.times do
+    User.create!(
+      email: Faker::Internet.unique.email,
+      encrypted_password: Faker::Internet.password(min_length: 6)
+    )
+  end
 =end
