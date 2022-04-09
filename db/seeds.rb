@@ -108,12 +108,6 @@ user_admin.password = 'leaked'
 user_admin.password_confirmation = 'leaked'
 user_admin.save!
 
-#vote_admin_wileys = Vote.new
-#vote_admin_wileys.split = true
-#vote_admin_wileys.restaurant_id = wileys.id
-#vote_admin_wileys.user_id = user_admin.id
-#vote_admin_wileys.save!
-
 Vote.create!(
   split: true,
   restaurant_id: wileys.id,
@@ -121,6 +115,22 @@ Vote.create!(
 )
 
 =begin
+  584.times do
+    Vote.create!(
+      split: true,
+      restaurant_id: Faker::Number.within(range: 1..99),
+      user_id: Faker::Number.within(range: 1..3)
+    )
+  end
+
+  479.times do
+    Vote.create!(
+      split: false,
+      restaurant_id: Faker::Number.within(range: 1..99),
+      user_id: Faker::Number.within(range: 1..3)
+    )
+  end
+
   43.times do
     User.create!(
       email: Faker::Internet.unique.email,
