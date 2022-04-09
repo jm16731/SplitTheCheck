@@ -12,10 +12,9 @@ class Vote < ApplicationRecord
     end
 
     def total_thumbs_down(restaurant_id)
-      0
-      #Votes.count.
-      #group(:restaurant).having(restaurant: {id: restaurant_id}).
-      #where(split: false)
+      Votes.count.
+      group(:restaurant).having(restaurant: {id: restaurant_id}).
+      where(split: false)
     end
 end
 
