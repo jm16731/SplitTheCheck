@@ -13,6 +13,13 @@ class RestaurantTest < ActiveSupport::TestCase
     assert restaurant.errors[:location].any?
   end
 
+  test "restaurant with attributes is good" do
+    restaurant = Restaurant.new
+    restaurant.name = "Wiley's"
+    restaurant.location = "Highway 80"
+    assert restaurant.valid?
+  end
+
 =begin
   test "restaurant is valid if attributes exist and splits are non-negative" do
     restaurant = Restaurant.new(
