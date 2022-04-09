@@ -3,7 +3,7 @@ require "test_helper"
 class RestaurantTest < ActiveSupport::TestCase
 
   setup do
-    @restaurant = restaurants(:one)
+    #@restaurant = restaurants(:one)
   end
 
   test "restaurant attributes must not be empty" do
