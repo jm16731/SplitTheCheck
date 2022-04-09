@@ -114,23 +114,23 @@ Vote.create!(
   user_id: user_admin.id
 )
 
+584.times do
+  Vote.create!(
+    split: true,
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3)
+  )
+end
+
+479.times do
+  Vote.create!(
+    split: false,
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3)
+  )
+end
+
 =begin
-  584.times do
-    Vote.create!(
-      split: true,
-      restaurant_id: Faker::Number.within(range: 1..99),
-      user_id: Faker::Number.within(range: 1..3)
-    )
-  end
-
-  479.times do
-    Vote.create!(
-      split: false,
-      restaurant_id: Faker::Number.within(range: 1..99),
-      user_id: Faker::Number.within(range: 1..3)
-    )
-  end
-
   43.times do
     User.create!(
       email: Faker::Internet.unique.email,
