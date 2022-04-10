@@ -4,8 +4,6 @@ class RestaurantTest < ActiveSupport::TestCase
 
   setup do
     @restaurant = restaurants(:joe)
-    @user = users(:admin)
-    @vote = votes(:vote_for_joe)
   end
 
   test "restaurant attributes must not be empty" do
@@ -43,6 +41,14 @@ class RestaurantTest < ActiveSupport::TestCase
 
   test "total_thumbs_down returns 0 downvote for new restaurant with no downvote" do
     assert_equal 0, @restaurant.total_thumbs_down
+  end
+
+  test "total_thumbs_up returns 2 upvote for paula" do
+    assert_equal 2, restaurants(:paula).total_thumbs_up
+  end
+
+  test "total_thumbs_down returns 3 downvote for paula" do
+    assert_equal 3, restaurants(:paula).total_thumbs_down
   end
 
 =begin

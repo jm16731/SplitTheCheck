@@ -14,3 +14,28 @@ vote_for_joe:
   split: true
   restaurant: joe
   user: admin
+
+vote_for_paula:
+  split: true
+  restaurant: paula
+  user: admin
+
+vote_again_for_paula:
+  split: true
+  restaurant: paula
+  user: admin
+
+vote_no_for_paula:
+  split: false
+  restaurant: paula
+  user: admin
+
+vote_no_again_for_paula:
+  split: false
+  restaurant: paula
+  user: admin
+
+vote_no_blast_it_for_paula:
+  split: false
+  restaurant: paula
+  user: admin
