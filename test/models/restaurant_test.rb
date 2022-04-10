@@ -37,6 +37,14 @@ class RestaurantTest < ActiveSupport::TestCase
     assert_equal 0, @restaurant.vote.where(votes: { split: false }).count
   end
 
+  test "total_thumbs_up returns 1 upvote for new restaurant with upvote" do
+    assert_equal 1, @restaurant.total_thumbs_up
+  end
+
+  test "total_thumbs_down returns 0 downvote for new restaurant with no downvote" do
+    assert_equal 0, @restaurant.total_thumbs_down
+  end
+
 =begin
   test "restaurant is valid if attributes exist and splits are non-negative" do
     restaurant = Restaurant.new(

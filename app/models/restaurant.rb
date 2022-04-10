@@ -27,15 +27,11 @@ class Restaurant < ApplicationRecord
   #end
 
   def total_thumbs_up()
-    #Votes.count.
-    #group(:restaurant).having(restaurant: {id: restaurant_id}).
-    #where(split: true)
+    self.vote.where(votes: { split: true }).count
   end
 
   def total_thumbs_down()
-    #Votes.count.
-    #group(:restaurant).having(restaurant: {id: restaurant_id}).
-    #where(split: false)
+    self.vote.where(votes: { split: false }).count
   end
 
 end
