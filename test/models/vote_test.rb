@@ -3,12 +3,14 @@ require "test_helper"
 class VoteTest < ActiveSupport::TestCase
 
   setup do
-    @restaurant = Restaurant.create(name: "Wiley's", location: "Highway 80")
-    @user = User.create(email: "testing@example.com", password: "aaaaaaaaaaa", password_confirmation: "aaaaaaaaaaa")
-    @vote = Vote.create!(
-      split: true,
-      restaurant_id: @restaurant.id,
-      user_id: @user.id
+    @restaurant = Restaurant.create(
+      name: "Wiley's",
+      location: "Highway 80"
+    )
+    @user = User.create(
+      email: "testing@example.com",
+      password: "aaaaaaaaaaa",
+      password_confirmation: "aaaaaaaaaaa"
     )
   end
 
@@ -38,8 +40,4 @@ class VoteTest < ActiveSupport::TestCase
     assert vote.valid?
   end
 
-  test "vote_thumbs_up returns 1 true vote for wiley's bbq" do
-    @count = Vote.total_thumbs_up(@restaurant.id)
-    assert_equal 1, @count
-  end
 end

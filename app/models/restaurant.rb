@@ -26,14 +26,16 @@ class Restaurant < ApplicationRecord
   #  update_attribute(:wont_split, wont_split + 1)
   #end
 
-  def total_thumbs_up
-    0
-    #Vote.total_thumbs_up(this.id)
+  def total_thumbs_up()
+    #Votes.count.
+    #group(:restaurant).having(restaurant: {id: restaurant_id}).
+    #where(split: true)
   end
 
-  def total_thumbs_down
-    0
-    #Vote.total_thumbs_down(this.id)
+  def total_thumbs_down()
+    #Votes.count.
+    #group(:restaurant).having(restaurant: {id: restaurant_id}).
+    #where(split: false)
   end
 
 end
