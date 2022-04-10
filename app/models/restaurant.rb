@@ -18,13 +18,21 @@ class Restaurant < ApplicationRecord
   #  greater_than_or_equal_to: 0
   #}
 
-  #def thumbs_up
-  #  update_attribute(:will_split, will_split + 1)
-  #end
+  def thumbs_up(user)
+    #update_attribute(:will_split, will_split + 1)
+    self.vote.create!(
+      split: true,
+      user: user
+    )
+  end
 
-  #def thumbs_down
-  #  update_attribute(:wont_split, wont_split + 1)
-  #end
+  def thumbs_down(user)
+    #update_attribute(:wont_split, wont_split + 1)
+    self.vote.create!(
+      split: false,
+      user: user
+    )
+  end
 
   def total_thumbs_up()
     self.vote.where(votes: { split: true }).count

@@ -4,6 +4,9 @@ class RestaurantTest < ActiveSupport::TestCase
 
   setup do
     @restaurant = restaurants(:joe)
+    @paula = restaurants(:paula)
+
+    @admin = users(:admin)
   end
 
   test "restaurant attributes must not be empty" do
@@ -44,11 +47,53 @@ class RestaurantTest < ActiveSupport::TestCase
   end
 
   test "total_thumbs_up returns 2 upvote for paula" do
-    assert_equal 2, restaurants(:paula).total_thumbs_up
+    assert_equal 2, @paula.total_thumbs_up
   end
 
   test "total_thumbs_down returns 3 downvote for paula" do
-    assert_equal 3, restaurants(:paula).total_thumbs_down
+    assert_equal 3, @paula.total_thumbs_down
+  end
+
+  test "create now paula downvote from admin does work" do
+    @paula.vote.create!(
+      split: false,
+      user: @admin
+    )
+    assert_equal 4, @paula.total_thumbs_down
+  end
+
+  test "joe thumbs_up results in 2 upvotes" do
+    @restaurant.thumbs_up(@admin)
+    assert_equal 2, @restaurant.total_thumbs_up
+  end
+
+  test "joe thumbs_up thrice results in 4 upvotes" do
+    @restaurant.thumbs_up(@admin)
+    @restaurant.thumbs_up(@admin)
+    @restaurant.thumbs_up(@admin)
+    assert_equal 4, @restaurant.total_thumbs_up
+  end
+
+  test "paula thumbs_down results in 4 upvotes" do
+    @paula.thumbs_down(@admin)
+    assert_equal 4, @paula.total_thumbs_down
+  end
+
+  test "paula thumbs_down thrice results in 6 upvotes" do
+    @paula.thumbs_down(@admin)
+    @paula.thumbs_down(@admin)
+    @paula.thumbs_down(@admin)
+    assert_equal 6, @paula.total_thumbs_down
+  end
+
+  test "joe thumbs_up thrice thumbs_down twice results in 4 upvotes, 2 downvotes" do
+    @restaurant.thumbs_up(@admin)
+    @restaurant.thumbs_up(@admin)
+    @restaurant.thumbs_up(@admin)
+    @restaurant.thumbs_down(@admin)
+    @restaurant.thumbs_down(@admin)
+    assert_equal 4, @restaurant.total_thumbs_up
+    assert_equal 2, @restaurant.total_thumbs_down
   end
 
 =begin
