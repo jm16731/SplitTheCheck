@@ -13,7 +13,3 @@
 admin:
   email: 'fake_email@not_a_real_url.com'
   encrypted_password: 'mX$%ty0il'
-
-#test:
-#  email: 'test@example.com'
-#  encrypted_password: 'l87#pol56'
