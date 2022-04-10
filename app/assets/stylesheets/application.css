@@ -20,6 +20,10 @@
  	margin: 0;
   padding: 60px;
  }
+ h2.user {
+   text-align: right;
+   color: white;
+ }
  .notice, #notice {
   	background: #ffb;
   	border-radius: 0.5em;
