@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[ show edit update destroy thumbs_up thumbs_down ]
-  before_action :authenticate_user! only: %i[ new create edit update destroy thumbs_up thumbs_down ]
+  before_action :authenticate_user!, only: %i[ new create edit update destroy thumbs_up thumbs_down ]
 
   # GET /restaurants or /restaurants.json
   # Logic for search is thanks to https://medium.com/@rrrachelrath/beginners-guide-to-making-a-ruby-on-rails-search-bar-9e94a9b161d9
