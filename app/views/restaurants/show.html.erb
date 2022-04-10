@@ -1,7 +1,3 @@
-<% if notice %>
-	<aside id="notice"><%= notice %></aside>
-<% end %>
-
 <h1>Split the Check</h1>
 
 <p>
@@ -11,11 +7,11 @@
 </p>
 
 <p>
-  <strong>Yes: </strong><%= @restaurant.will_split %>
+  <strong>Yes: </strong><%= @restaurant.total_thumbs_up %>
 </p>
 
 <p>
-  <strong>No: </strong><%= @restaurant.wont_split %>
+  <strong>No: </strong><%= @restaurant.total_thumbs_down %>
 </p>
 
 <td><%= link_to image_tag("thumbs_up.png", width: 20),

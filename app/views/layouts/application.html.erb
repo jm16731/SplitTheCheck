@@ -14,8 +14,12 @@
     <header class="banner">
       <h1>Split the Check</h1>
     </header>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+    	<aside id="notice"><%= notice %></aside>
+    <% end %>
+    <% if alert %>
+      <aside id="alert"><%= alert %></aside>
+    <% end %>
     <main class='<%= controller.controller_name %>'>
       <%= yield %>
     </main>
