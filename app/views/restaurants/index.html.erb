@@ -22,10 +22,12 @@
         <td><%= restaurant.total_thumbs_up %></td>
         <td><%= restaurant.total_thumbs_down %></td>
         <td><%= link_to 'Show', restaurant %></td>
-        <td><%= link_to image_tag("thumbs_up.png", width: 20),
-          thumbs_up_path(:id => restaurant.id), :method => :patch %></td>
-        <td><%= link_to image_tag("thumbs_down.jpg", width: 20),
-          thumbs_down_path(:id => restaurant.id), :method => :patch %></td>
+				<% if user_signed_in? %>
+	        <td><%= link_to image_tag("thumbs_up.png", width: 20),
+	          thumbs_up_path(:id => restaurant.id), :method => :patch %></td>
+	        <td><%= link_to image_tag("thumbs_down.jpg", width: 20),
+	          thumbs_down_path(:id => restaurant.id), :method => :patch %></td>
+				<% end %>
       </tr>
     <% end %>
   </tbody>
@@ -33,7 +35,9 @@
 
 <br>
 
-<%= link_to 'New Restaurant', new_restaurant_path %>
+<% if user_signed_in? %>
+	<%= link_to 'New Restaurant', new_restaurant_path %>
+<% end %>
 
 <%= link_to 'First', first_path %>
 <%= link_to 'Previous 10', prev_10_path %>
