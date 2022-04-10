@@ -10,7 +10,7 @@
 #  user_id: 1
 #  split: true
 
-vote:
+vote_for_joe:
   split: true
   restaurant: joe
   user: admin

@@ -3,12 +3,9 @@ require "test_helper"
 class RestaurantTest < ActiveSupport::TestCase
 
   setup do
-    @restaurant = restaurants(:one)
-
-    @user = User.new
-    @user.email = 'testing123@example.com'
-    @user.password = 'fake_password'
-    @user.password_confirmation = 'fake_password'
+    @restaurant = restaurants(:joe)
+    @user = users(:admin)
+    @vote = votes(:vote_for_joe)
   end
 
   test "restaurant attributes must not be empty" do
@@ -26,16 +23,18 @@ class RestaurantTest < ActiveSupport::TestCase
   end
 
   test "new restaurant has 0 votes" do
-    assert_equal 0, @restaurant.vote.count
+    restaurant = Restaurant.new
+    restaurant.name = "Wiley's"
+    restaurant.location = "Highway 80"
+    assert_equal 0, restaurant.vote.count
   end
 
-  test "new restaurant with upvote has 1 upvote count, 0 downvote count" do
-    @vote = Vote.create!(
-      split: true,
-      restaurant_id: @restaurant.id,
-      user_id: @user.id
-    )
-    assert_equal 1, @restaurant.vote.count.where(vote: {split: true})
+  test "new restaurant with upvote has 1 upvote countt" do
+    assert_equal 1, @restaurant.vote.where(votes: { split: true }).count
+  end
+
+  test "new restaurant with no downvotes has 0 downvote countt" do
+    assert_equal 0, @restaurant.vote.where(votes: { split: false }).count
   end
 
 =begin
