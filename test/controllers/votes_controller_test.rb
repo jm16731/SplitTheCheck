@@ -27,7 +27,6 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
           user: users(:admin)
         }
       }
-    assert_response :redirected
     end
 
     assert_redirected_to vote_url(Vote.last)
@@ -51,6 +50,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
         user: users(:admin)
       }
     }
+    assert_equal 6, Vote.count
     assert_redirected_to vote_url(@vote)
   end
 
