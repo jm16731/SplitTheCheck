@@ -24,7 +24,19 @@ class VoteTest < ActiveSupport::TestCase
     #assert vote.errors[:user_id].any?
   end
 
-  test "vote valid if have attributes & references" do
+  test "can create new vote by new" do
+    vote = Vote.new(
+      restaurant: restaurants(:joe),
+      split: true,
+      user: users(:admin)
+    )
+    assert vote.valid?
+    assert vote.errors[:split].empty?
+    assert vote.restaurant_id.present?
+    assert vote.user_id.present?
+  end
+
+  test "vote valid if have attributes & references, done by create" do
     vote = Vote.create!(
       split: true,
       restaurant_id: @restaurant.id,

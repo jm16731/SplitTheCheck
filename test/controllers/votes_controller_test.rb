@@ -24,22 +24,12 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to :new_user_session
   end
 
-  test "can create new vote" do
-    assert_difference('Vote.count') do
-      Vote.create(
-        restaurant: restaurants(:joe),
-        split: true,
-        user: users(:admin)
-      )
-    end
-  end
-
   test "should create vote, if logged in" do
     assert_difference('Vote.count') do
       post votes_url, params: {
         vote: {
-          split: true,
           restaurant: restaurants(:joe),
+          split: true,
           user: users(:admin)
         }
       }
@@ -54,8 +44,8 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count', 0) do
       post votes_url, params: {
         vote: {
-          split: true,
           restaurant: restaurants(:joe),
+          split: true,
           user: users(:admin)
         }
       }
