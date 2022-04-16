@@ -51,6 +51,8 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   test "index, logged in, has navigation links, with new restaurant" do
     get restaurants_url
     assert_select "a", "fake_email@not_a_real_url.com"
+    assert_select "a", { :href => :new_user_session }, false
+    assert_select "a", { :href => :new_user_registration }, false
     assert_select "a", "Log Out"
     assert_select "a", "New Restaurant"
     assert_select "a", "First"
@@ -65,6 +67,8 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_select "a", "Log In"
     assert_select "a", "Register"
     assert_select "a", { :href => :new_restaurant }, false
+    assert_select "a", { :href => :edit_user_registration }, false
+    assert_select "a", { :href => :destroy_user_session }, false
     assert_select "a", "First"
     assert_select "a", "Previous 10"
     assert_select "a", "Next 10"
