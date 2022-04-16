@@ -14,8 +14,8 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     Rails.cache.clear
   end
 
-  test "should be 2 restaurants" do
-    assert_equal 2, Restaurant.count
+  test "should be 12 restaurants" do
+    assert_equal 12, Restaurant.count
   end
 
   test "should get index" do
@@ -33,7 +33,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "index, logged out, has header, table, 5 columns" do
-    sign_out :admin
+    sign_out :user
     get restaurants_url
     assert_select "h1", "Restaurants"
     assert_select "table thead tr th", count: 5
@@ -50,6 +50,8 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
 
   test "index, logged in, has navigation links, with new restaurant" do
     get restaurants_url
+    assert_select "a", "fake_email@not_a_real_url.com"
+    assert_select "a", "Log Out"
     assert_select "a", "New Restaurant"
     assert_select "a", "First"
     assert_select "a", "Previous 10"
@@ -58,9 +60,11 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "index, logged out, has navigation links, no new restaurant" do
-    sign_out :admin
+    sign_out :user
     get restaurants_url
-    assert_select "a", false, "New Restaurant"
+    assert_select "a", "Log In"
+    assert_select "a", "Register"
+    assert_select "a", "New Restaurant"
     assert_select "a", "First"
     assert_select "a", "Previous 10"
     assert_select "a", "Next 10"
@@ -215,15 +219,11 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "show page, logged out should have header, back link, no thumbs up/down" do
-    sign_out :admin
+    sign_out :user
     get restaurant_url(@restaurant)
     assert_select "h1", "Split the Check"
     assert_select "a", "Back"
     assert_select "img", count: 0
-    assert_select "img" do
-    	assert_select "[src=?]", false, @thumbs_up_src
-    	assert_select "[src=?]", false, @thumbs_down_src
-    end
   end
 
   test "should get edit when logged in" do
@@ -232,7 +232,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not get edit when logged out" do
-    sign_out :admin
+    sign_out :user
     get edit_restaurant_url(@restaurant)
     assert_response :redirect
   end
@@ -254,7 +254,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not update restaurant, if logged out" do
-    sign_out :admin
+    sign_out :user
 
     patch restaurant_url(@restaurant), params: {
       restaurant: {
@@ -274,11 +274,12 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not destroy restaurant, if logged out" do
-    assert_difference('Restaurant.count', -1) do
+    sign_out :user
+    assert_difference('Restaurant.count', 0) do
       delete restaurant_url(@restaurant)
     end
 
-    assert_reponse :redirect
+    assert_response :redirect
   end
 
   test "thumbs_up should redirect and increase" do

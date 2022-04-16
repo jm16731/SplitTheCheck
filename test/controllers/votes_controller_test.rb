@@ -24,7 +24,6 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
         vote: {
           restaurant: @vote.restaurant,
           split: @vote.split,
-          time: @vote.time,
           user: @vote.user
         }
       }
@@ -48,7 +47,6 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
       vote: {
         restaurant: @vote.restaurant,
         split: @vote.split,
-        time: @vote.time,
         user: @vote.user
       }
     }
