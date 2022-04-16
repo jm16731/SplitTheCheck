@@ -64,7 +64,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     get restaurants_url
     assert_select "a", "Log In"
     assert_select "a", "Register"
-    assert_select "a", "New Restaurant", false
+    assert_select "a", { :href => :new_restaurant }, false
     assert_select "a", "First"
     assert_select "a", "Previous 10"
     assert_select "a", "Next 10"
