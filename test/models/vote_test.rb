@@ -20,6 +20,7 @@ class VoteTest < ActiveSupport::TestCase
     assert vote.errors[:split].any?
     assert_nil vote.restaurant_id
     assert_nil vote.user_id
+    assert_equal 6, Vote.count
     #assert vote.errors[:restaurant_id].any?
     #assert vote.errors[:user_id].any?
   end
@@ -34,6 +35,9 @@ class VoteTest < ActiveSupport::TestCase
     assert vote.errors[:split].empty?
     assert vote.restaurant_id.present?
     assert vote.user_id.present?
+
+    vote.save
+    assert_equal 7, Vote.count
   end
 
   test "vote valid if have attributes & references, done by create" do
@@ -44,12 +48,16 @@ class VoteTest < ActiveSupport::TestCase
     )
     assert vote.valid?
 
+    assert_equal 7, Vote.count
+
     vote = Vote.create!(
       split: false,
       restaurant_id: @restaurant.id,
       user_id: @user.id
     )
     assert vote.valid?
+
+    assert_equal 8, Vote.count
   end
 
 end
