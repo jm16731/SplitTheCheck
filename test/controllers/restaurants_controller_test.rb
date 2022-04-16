@@ -184,12 +184,18 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table tbody tr", count: 2
   end
 
-  test "should get new" do
+  test "should get new, if logged in" do
     get new_restaurant_url
     assert_response :success
   end
 
-  test "should create restaurant" do
+  test "should not get new, if logged out" do
+    sign_out :user
+    get new_restaurant_url
+    assert_redirected_to :new_user_session
+  end
+
+  test "should create restaurant, if logged in" do
     assert_difference('Restaurant.count', 1) do
       post restaurants_url, params: {
         restaurant: {
@@ -200,6 +206,20 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to restaurant_url(Restaurant.last)
+  end
+
+  test "should not create restaurant, if logged out" do
+    sign_out :user
+    assert_difference('Restaurant.count', 0) do
+      post restaurants_url, params: {
+        restaurant: {
+          location: @restaurant.location,
+          name: @restaurant.name,
+        }
+      }
+    end
+
+    assert_redirected_to :new_user_session
   end
 
   test "should show restaurant" do
@@ -234,7 +254,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   test "should not get edit when logged out" do
     sign_out :user
     get edit_restaurant_url(@restaurant)
-    assert_response :redirect
+    assert_redirected_to :new_user_session
   end
 
   test "should update restaurant, if logged in" do
@@ -262,7 +282,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
         name: "Greg's Random Slop"
       }
     }
-    assert_response :redirect
+    assert_redirected_to :new_user_session
   end
 
   test "should destroy restaurant, if logged in" do
@@ -279,19 +299,21 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
       delete restaurant_url(@restaurant)
     end
 
-    assert_response :redirect
+    assert_redirected_to :new_user_session
   end
 
   test "thumbs_up should redirect and increase" do
     patch thumbs_up_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
     assert_equal 2, @restaurant.reload.total_thumbs_up
+    assert_equal "Thank you for informing us of who splits the check", flash[:notice]
   end
 
-  test "thumbs_down should redirect and increase" do
+  test "thumbs_down should redirect and decrease" do
     patch thumbs_down_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
     assert_equal 1, @restaurant.reload.total_thumbs_down
+    assert_equal "Thank you for informing us of those who refuse to split the check", flash[:notice]
   end
 
   test "repeated thumbs_up / thumbs_down works as expected" do

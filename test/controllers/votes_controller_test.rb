@@ -30,6 +30,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to vote_url(Vote.last)
+    assert_equal "Vote was successfully created.", flash[:notice]
   end
 
   test "should show vote" do
@@ -52,6 +53,7 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     }
     assert_equal 6, Vote.count
     assert_redirected_to vote_url(@vote)
+    assert_equal "Vote was successfully updated.", flash[:notice]
   end
 
   test "should destroy vote" do
