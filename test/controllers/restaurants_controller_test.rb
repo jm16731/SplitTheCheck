@@ -1,8 +1,11 @@
 require "test_helper"
 
 class RestaurantsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @restaurant = restaurants(:one)
+    @restaurant = restaurants(:joe)
+    sign_in users(:admin)
     @thumbs_up_src = "/assets/thumbs_up-31deedd24365bb78a6a111e446096cedfc3d73bac7dce11130ec044cdf6c6880.png"
     @thumbs_down_src = "/assets/thumbs_down-513a3b5d910cefc9dcc20a90ca33b4bc572f4b6041ee234ecfe41282a1416730.jpg"
   end
@@ -11,8 +14,8 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     Rails.cache.clear
   end
 
-  test "should be 12 restaurants" do
-    assert_equal 12, Restaurant.count
+  test "should be 2 restaurants" do
+    assert_equal 2, Restaurant.count
   end
 
   test "should get index" do
@@ -20,7 +23,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "index has header and table" do
+  test "index, logged in, has header, table, 7 columns" do
     get restaurants_url
     assert_select "h1", "Restaurants"
     assert_select "table thead tr th", count: 5
@@ -29,15 +32,35 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table tbody tr td", count: 7 * 10
   end
 
+  test "index, logged out, has header, table, 5 columns" do
+    sign_out :admin
+    get restaurants_url
+    assert_select "h1", "Restaurants"
+    assert_select "table thead tr th", count: 5
+    assert_select "table tbody tr", count: 10
+    assert_select "a", "Show", count: 10
+    assert_select "table tbody tr td", count: 5 * 10
+  end
+
   test "index has search form" do
     get restaurants_url
     assert_select "input[type=submit]", 1
     assert_select "a", "Clear"
   end
 
-  test "index has navigation links" do
+  test "index, logged in, has navigation links, with new restaurant" do
     get restaurants_url
     assert_select "a", "New Restaurant"
+    assert_select "a", "First"
+    assert_select "a", "Previous 10"
+    assert_select "a", "Next 10"
+    assert_select "a", "Last"
+  end
+
+  test "index, logged out, has navigation links, no new restaurant" do
+    sign_out :admin
+    get restaurants_url
+    assert_select "a", false, "New Restaurant"
     assert_select "a", "First"
     assert_select "a", "Previous 10"
     assert_select "a", "Next 10"
@@ -168,8 +191,6 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
         restaurant: {
           location: @restaurant.location,
           name: @restaurant.name,
-          will_split: @restaurant.will_split,
-          wont_split: @restaurant.wont_split
         }
       }
     end
@@ -182,7 +203,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "show page should have header, back link, thumbs up/down" do
+  test "show page, logged in, should have header, back link, thumbs up/down" do
     get restaurant_url(@restaurant)
     assert_select "h1", "Split the Check"
     assert_select "a", "Back"
@@ -193,34 +214,58 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "should get edit" do
+  test "show page, logged out should have header, back link, no thumbs up/down" do
+    sign_out :admin
+    get restaurant_url(@restaurant)
+    assert_select "h1", "Split the Check"
+    assert_select "a", "Back"
+    assert_select "img", count: 0
+    assert_select "img" do
+    	assert_select "[src=?]", false, @thumbs_up_src
+    	assert_select "[src=?]", false, @thumbs_down_src
+    end
+  end
+
+  test "should get edit when logged in" do
     get edit_restaurant_url(@restaurant)
     assert_response :success
   end
 
-  test "should update restaurant" do
-    assert @restaurant.name = "Basil's"
-    assert @restaurant.location = "101 Johnny Mercer Blvd"
-    assert @restaurant.will_split = 7
-    assert @restaurant.wont_split = 3
+  test "should not get edit when logged out" do
+    sign_out :admin
+    get edit_restaurant_url(@restaurant)
+    assert_response :redirect
+  end
+
+  test "should update restaurant, if logged in" do
+    assert @restaurant.name = "Joe's"
+    assert @restaurant.location = "Highway 156"
 
     patch restaurant_url(@restaurant), params: {
       restaurant: {
         location: "112 Highway 80",
-        name: "Greg's Random Slop",
-        will_split: 12,
-        wont_split: 3
+        name: "Greg's Random Slop"
       }
     }
     assert_redirected_to restaurant_url(@restaurant)
 
     assert @restaurant.name = "Greg's Random Slop"
     assert @restaurant.location = "112 Highway 80"
-    assert @restaurant.will_split = 12
-    assert @restaurant.wont_split = 3
   end
 
-  test "should destroy restaurant" do
+  test "should not update restaurant, if logged out" do
+    sign_out :admin
+
+    patch restaurant_url(@restaurant), params: {
+      restaurant: {
+        location: "112 Highway 80",
+        name: "Greg's Random Slop"
+      }
+    }
+    assert_response :redirect
+  end
+
+  test "should destroy restaurant, if logged in" do
     assert_difference('Restaurant.count', -1) do
       delete restaurant_url(@restaurant)
     end
@@ -228,46 +273,54 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to restaurants_url
   end
 
+  test "should not destroy restaurant, if logged out" do
+    assert_difference('Restaurant.count', -1) do
+      delete restaurant_url(@restaurant)
+    end
+
+    assert_reponse :redirect
+  end
+
   test "thumbs_up should redirect and increase" do
     patch thumbs_up_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 8, @restaurant.reload.will_split
+    assert_equal 2, @restaurant.reload.total_thumbs_up
   end
 
   test "thumbs_down should redirect and increase" do
     patch thumbs_down_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 4, @restaurant.reload.wont_split
+    assert_equal 1, @restaurant.reload.total_thumbs_down
   end
 
   test "repeated thumbs_up / thumbs_down works as expected" do
     patch thumbs_up_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 8, @restaurant.reload.will_split
+    assert_equal 2, @restaurant.reload.total_thumbs_up
 
     patch thumbs_down_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 4, @restaurant.reload.wont_split
+    assert_equal 1, @restaurant.reload.total_thumbs_down
 
     patch thumbs_up_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 9, @restaurant.reload.will_split
+    assert_equal 3, @restaurant.reload.total_thumbs_up
 
     patch thumbs_up_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 10, @restaurant.reload.will_split
+    assert_equal 4, @restaurant.reload.total_thumbs_up
 
     patch thumbs_up_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 11, @restaurant.reload.will_split
+    assert_equal 5, @restaurant.reload.total_thumbs_up
 
     patch thumbs_down_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 5, @restaurant.reload.wont_split
+    assert_equal 2, @restaurant.reload.total_thumbs_down
 
     patch thumbs_down_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
-    assert_equal 6, @restaurant.reload.wont_split
+    assert_equal 3, @restaurant.reload.total_thumbs_down
   end
 
   test "should get search" do

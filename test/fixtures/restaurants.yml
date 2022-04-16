@@ -7,3 +7,19 @@ joe:
 paula:
   name: Paula Dean's
   location: W Congress St
+
+wiley:
+  name: Wiley's
+  location: 384 Highway 80
+
+one:
+  name: Slop
+  location: 98 Bull St
+
+two:
+  name: Sam Hill
+  location: 987 First St
+
+three:
+  name: Mrs. Wilke's
+  location: 98 Wrong Address
