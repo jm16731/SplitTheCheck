@@ -22,11 +22,12 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Vote.count') do
       post votes_url, params: {
         vote: {
-          restaurant: @vote.restaurant,
-          split: @vote.split,
-          user: @vote.user
+          split: true,
+          restaurant: restaurants(:joe),
+          user: users(:admin)
         }
       }
+    assert_response :redirected
     end
 
     assert_redirected_to vote_url(Vote.last)
@@ -45,9 +46,9 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
   test "should update vote" do
     patch vote_url(@vote), params: {
       vote: {
-        restaurant: @vote.restaurant,
-        split: @vote.split,
-        user: @vote.user
+        restaurant: restaurants(:joe),
+        split: false,
+        user: users(:admin)
       }
     }
     assert_redirected_to vote_url(@vote)

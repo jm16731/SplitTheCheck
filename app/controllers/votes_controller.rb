@@ -1,6 +1,6 @@
 class VotesController < ApplicationController
   before_action :set_vote, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: %i[ edit create update destroy ]
+  before_action :authenticate_user!, only: %i[ new edit create update destroy ]
 
   # GET /votes or /votes.json
   def index
@@ -66,6 +66,10 @@ class VotesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def vote_params
-      params.require(:vote).permit(:restaurant, :user, :split, :time)
+      params.require(:vote).permit(
+        :split,
+        restaurant_attributes: [:name, :location],
+        user_attributes: [:email, :encrypted_password]
+      )
     end
 end
