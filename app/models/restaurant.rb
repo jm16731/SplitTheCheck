@@ -1,6 +1,11 @@
 class Restaurant < ApplicationRecord
   has_many :vote, dependent: :destroy
+  has_many :favorite, dependent: :destroy
+  has_many :comment, dependent: :destroy
+
   has_many :user, through: :vote
+  has_many :user, through: :favorite
+  has_many :user, through: :comment
 
   validates :name, :location, presence: true
   #validates :will_split, :wont_split, presence: true

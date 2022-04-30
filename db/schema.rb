@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_08_190211) do
+ActiveRecord::Schema.define(version: 2022_04_30_134146) do
+
+  create_table "comments", force: :cascade do |t|
+    t.integer "restaurant_id", null: false
+    t.integer "user_id", null: false
+    t.string "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["restaurant_id"], name: "index_comments_on_restaurant_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "restaurant_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["restaurant_id"], name: "index_favorites_on_restaurant_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
 
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
@@ -41,6 +60,10 @@ ActiveRecord::Schema.define(version: 2022_04_08_190211) do
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
+  add_foreign_key "comments", "restaurants"
+  add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "restaurants"
+  add_foreign_key "favorites", "users"
   add_foreign_key "votes", "restaurants"
   add_foreign_key "votes", "users"
 end
