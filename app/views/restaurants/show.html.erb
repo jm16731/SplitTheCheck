@@ -49,12 +49,7 @@
 </table>
 
 <% if user_signed_in? %>
-  <%= form_with url: "/new_comment" do |form| %>
-  	<%= form.label :new_comment %>
-  	<%= form.text_field :new_comment, params[:new_comment] %>
-
-  	<%= form.submit "New Comment" %>
-  <% end %>
+  <%= render 'new_comment' %>
 <% end %>
 
 <%= link_to 'Back', restaurants_path %>

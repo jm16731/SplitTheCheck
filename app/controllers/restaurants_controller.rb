@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: %i[ show edit update destroy thumbs_up thumbs_down favorite unfavorite ]
-  before_action :authenticate_user!, only: %i[ new create edit update destroy thumbs_up thumbs_down favorite unfavorite ]
+  before_action :set_restaurant, only: %i[ show edit update destroy thumbs_up thumbs_down favorite unfavorite new_comment ]
+  before_action :authenticate_user!, only: %i[ new create edit update destroy thumbs_up thumbs_down favorite unfavorite new_comment ]
 
   # GET /restaurants or /restaurants.json
   # Logic for search is thanks to https://medium.com/@rrrachelrath/beginners-guide-to-making-a-ruby-on-rails-search-bar-9e94a9b161d9
@@ -154,13 +154,10 @@ class RestaurantsController < ApplicationController
       comment: params[:new_comment]
     )
 
-    # thanks to Dave Schweisguth for reloading page, https://stackoverflow.com/questions/7465259/how-can-i-reload-the-current-page-in-ruby-on-rails
-    respond_to do |format|
-      if @comment.save
-        format.js {render inline: "location.reload();", notice: "Comment submitted. Thanks you." }
-      else
-        format.js {render inline: "location.reload();", notice: "Comment not submitted. Try again." }
-      end
+    if @comment.save
+      redirect_to restaurants_url, notice: "Comment submitted. Thank you!"
+    else
+      redirect_to restaurants_url, notice: "Comment not submitted. Try again."
     end
   end
 

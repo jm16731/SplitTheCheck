@@ -1,0 +1,8 @@
+<%= form_tag "/new_comment", method: "POST" do %>
+  <%= label_tag :new_comment %>
+  <%= text_field_tag :new_comment, params[:new_comment] %>
+
+  <%= hidden_field_tag :id, @restaurant.id %>
+
+  <%= submit_tag("New Comment", :name => nil) %>
+<% end %>
