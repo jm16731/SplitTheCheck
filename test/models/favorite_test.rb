@@ -3,6 +3,9 @@ require "test_helper"
 class FavoriteTest < ActiveSupport::TestCase
   setup do
     @favorite = favorites(:one)
+    @admin = users(:admin)
+    @wiley = restaurants(:wiley)
+    @joe = restaurants(:joe)
   end
 
   test "favorites references must not be empty" do
@@ -42,5 +45,29 @@ class FavoriteTest < ActiveSupport::TestCase
     assert favorite.valid?
 
     assert_equal 4, Favorite.count
+  end
+
+  test "can delete favorite" do
+    Favorite.delete(@favorite)
+    assert_equal 1, Favorite.count
+  end
+
+  test "wiley's is admin's favorite, but joe is not" do
+    assert_equal true, Favorite.is_favorite(@admin, @wiley)
+    assert_equal false, Favorite.is_favorite(@admin, @joe)
+  end
+
+  test "updating favorites changes is_favorite method" do
+    assert_equal true, Favorite.is_favorite(@admin, @wiley)
+    assert_equal false, Favorite.is_favorite(@admin, @joe)
+
+    favorite = Favorite.create!(
+      restaurant: restaurants(:joe),
+      user: users(:admin)
+    )
+    Favorite.delete(@favorite)
+
+    assert_equal false, Favorite.is_favorite(@admin, @wiley)
+    assert_equal true, Favorite.is_favorite(@admin, @joe)
   end
 end

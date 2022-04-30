@@ -5,6 +5,7 @@ class RestaurantTest < ActiveSupport::TestCase
   setup do
     @restaurant = restaurants(:joe)
     @paula = restaurants(:paula)
+    @wiley = restaurants(:wiley)
 
     @admin = users(:admin)
   end
@@ -94,6 +95,11 @@ class RestaurantTest < ActiveSupport::TestCase
     @restaurant.thumbs_down(@admin)
     assert_equal 4, @restaurant.total_thumbs_up
     assert_equal 2, @restaurant.total_thumbs_down
+  end
+
+  test "wiley's is admin's favorite, but joe is not" do
+    assert_equal true, @wiley.is_favorite(@admin)
+    assert_equal false, @restaurant.is_favorite(@admin)
   end
 
 =begin

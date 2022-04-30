@@ -43,4 +43,7 @@ class Restaurant < ApplicationRecord
     self.vote.where(votes: { split: false }).count
   end
 
+  def is_favorite(user)
+    Favorite.is_favorite(user, self)
+  end
 end
