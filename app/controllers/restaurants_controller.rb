@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: %i[ show edit update destroy thumbs_up thumbs_down ]
-  before_action :authenticate_user!, only: %i[ new create edit update destroy thumbs_up thumbs_down ]
+  before_action :set_restaurant, only: %i[ show edit update destroy thumbs_up thumbs_down favorite unfavorite ]
+  before_action :authenticate_user!, only: %i[ new create edit update destroy thumbs_up thumbs_down favorite unfavorite ]
 
   # GET /restaurants or /restaurants.json
   # Logic for search is thanks to https://medium.com/@rrrachelrath/beginners-guide-to-making-a-ruby-on-rails-search-bar-9e94a9b161d9
@@ -138,10 +138,13 @@ class RestaurantsController < ApplicationController
 
   def favorite
     @restaurant.favorite.create!(user: current_user)
+    redirect_to restaurants_url, notice: "Restaurant favorited!"
   end
 
   def unfavorite
-    @restaurant.favorite.delete(user: current_user)
+    favorite = Favorite.where(user: current_user, restaurant: @restaurant)
+    Favorite.delete(favorite)
+    redirect_to restaurants_url, notice: "Restaurant unfavorited!"
   end
 
   private
