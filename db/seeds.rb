@@ -130,6 +130,61 @@ end
   )
 end
 
+25.times do
+  Favorite.create!(
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3)
+  )
+end
+
+174.times do
+  Comment.create!(
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3),
+    comment: Faker::Lorem.paragraph
+  )
+end
+
+30.times do
+  Comment.create!(
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3),
+    comment: Faker::ChuckNorris.fact
+  )
+end
+
+8.times do
+  Comment.create!(
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3),
+    comment: Faker::Quotes::Shakespeare.hamlet_quote
+  )
+end
+
+7.times do
+  Comment.create!(
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3),
+    comment: Faker::Quote.yoda
+  )
+end
+
+8.times do
+  Comment.create!(
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3),
+    comment: Faker::Quote.famous_last_words
+  )
+end
+
+7.times do
+  Comment.create!(
+    restaurant_id: Faker::Number.within(range: 1..99),
+    user_id: Faker::Number.within(range: 1..3),
+    comment: Faker::Quotes::Shakespeare.romeo_and_juliet_quote
+  )
+end
+
 =begin
   43.times do
     User.create!(
