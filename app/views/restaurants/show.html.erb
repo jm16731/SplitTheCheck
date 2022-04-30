@@ -29,13 +29,23 @@
     thumbs_up_path(:id => @restaurant.id), :method => :patch %>
   <%= link_to image_tag("thumbs_down.jpg", width: 20),
     thumbs_down_path(:id => @restaurant.id), :method => :patch %>
-
-  <% @restaurant.comment.each do |comment| %>
-  	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-  		<td><%= comment.user %></td>
-  		<td><%= comment.comment %></td>
-  	</tr>
-  <% end %>
 <% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @restaurant.comment.each do |comment| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= comment.user.email %></td>
+        <td><%= comment.comment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'Back', restaurants_path %>
