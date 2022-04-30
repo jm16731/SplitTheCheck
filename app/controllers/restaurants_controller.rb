@@ -147,6 +147,23 @@ class RestaurantsController < ApplicationController
     redirect_to restaurants_url, notice: "Restaurant unfavorited!"
   end
 
+  def new_comment
+    @comment = Comment.create!(
+      restaurant: @restaurant,
+      user: current_user,
+      comment: params[:new_comment]
+    )
+
+    # thanks to Dave Schweisguth for reloading page, https://stackoverflow.com/questions/7465259/how-can-i-reload-the-current-page-in-ruby-on-rails
+    respond_to do |format|
+      if @comment.save
+        format.js {render inline: "location.reload();", notice: "Comment submitted. Thanks you." }
+      else
+        format.js {render inline: "location.reload();", notice: "Comment not submitted. Try again." }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant
