@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   patch 'thumbs_down' => "restaurants#thumbs_down"
   patch 'thumbs_up/:id' => "restaurants#thumbs_up"
   patch 'thumbs_down/:id' => "restaurants#thumbs_down"
+  patch 'favorite' => "restaurants#favorite"
+  patch 'unfavorite' => "restaurants#unfavorite"
+  patch 'favorite/:id' => "restaurants#favorite"
+  patch 'unfavorite/:id' => "restaurants#unfavorite"
 
   root "restaurants#index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

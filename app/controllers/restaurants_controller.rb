@@ -136,6 +136,14 @@ class RestaurantsController < ApplicationController
     redirect_to restaurants_url, notice: "Thank you for informing us of those who refuse to split the check"
   end
 
+  def favorite
+    @restaurant.favorite.create!(user: current_user)
+  end
+
+  def unfavorite
+    @restaurant.favorite.delete(user: current_user)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_restaurant
