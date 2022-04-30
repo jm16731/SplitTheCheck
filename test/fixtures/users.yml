@@ -13,3 +13,7 @@
 admin:
   email: 'fake_email@not_a_real_url.com'
   encrypted_password: 'mX$%ty0il'
+
+dork:
+  email: 'random@not_a_real_url.com'
+  encrypted_password: 'needsabetterpasswrd'

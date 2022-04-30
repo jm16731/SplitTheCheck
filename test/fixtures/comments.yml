@@ -1,11 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  restaurant: one
-  user: one
-  comment: MyString
+  restaurant: wiley
+  user: admin
+  comment: Great BBQ. Eat here.
 
 two:
-  restaurant: two
-  user: two
-  comment: MyString
+  restaurant: paula
+  user: admin
+  comment: Want butter on your butter? Fried butter?
+
+three:
+  restaurant: paula
+  user: admin
+  comment: Look ma, I can leave multiple comments.
+
+four:
+  restaurant: joe
+  user: dork
+  comment: LEEEEEEEEEROOOOOOOOOOOYYY, JEEEEEEEENKIIIIIIINS!!

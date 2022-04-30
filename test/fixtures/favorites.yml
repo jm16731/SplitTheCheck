@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  restaurant: one
-  user: one
+  restaurant: wiley
+  user: admin
 
 two:
-  restaurant: two
-  user: two
+  restaurant: one
+  user: dork
