@@ -4,6 +4,11 @@ class CommentTest < ActiveSupport::TestCase
 
   setup do
     @comment = comments(:one)
+
+    @wiley = restaurants(:wiley)
+    @joe = restaurants(:joe)
+
+    @admin = users(:admin)
   end
 
   test "comment attributes & references must not be empty" do
@@ -17,9 +22,9 @@ class CommentTest < ActiveSupport::TestCase
 
   test "can create new comment by new" do
     comment = Comment.new(
-      restaurant: restaurants(:joe),
+      restaurant: @joe,
       comment: "Lorem",
-      user: users(:admin)
+      user: @admin
     )
     assert comment.valid?
     assert comment.errors[:comment].empty?
@@ -32,9 +37,9 @@ class CommentTest < ActiveSupport::TestCase
 
   test "invalid if comment is empty" do
     comment = Comment.new(
-      restaurant: restaurants(:joe),
+      restaurant: @joe,
       comment: "",
-      user: users(:admin)
+      user: @admin
     )
     assert comment.invalid?
     assert comment.errors[:comment].any?
@@ -45,8 +50,8 @@ class CommentTest < ActiveSupport::TestCase
   test "comment valid if have attributes & references, done by create" do
     comment = Comment.create!(
       comment: "Lorem",
-      restaurant: restaurants(:joe),
-      user: users(:admin)
+      restaurant: @joe,
+      user: @admin
     )
     assert comment.valid?
 
@@ -54,12 +59,24 @@ class CommentTest < ActiveSupport::TestCase
 
     comment_2 = Comment.create!(
       comment: "Lorem",
-      restaurant: restaurants(:joe),
-      user: users(:admin)
+      restaurant: @joe,
+      user: @admin
     )
     assert comment_2.valid?
 
     assert_equal 6, Comment.count
   end
 
+  test "comment history for wiley returns one review, good bbq" do
+
+    assert_equal "", @wiley.comment
+  end
+
+  test "comment history for one returns zero" do
+    assert_equal "", Comment.comment_history(restaurants(:one))
+  end
+
+  test "comment history for joe returns two different reviews" do
+    assert_equal "", Comment.comment_history(@joe)
+  end
 end
