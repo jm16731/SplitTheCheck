@@ -26,14 +26,14 @@
 
 <% if user_signed_in? %>
   <%= link_to image_tag("thumbs_up.png", width: 20),
-    thumbs_up_path(:id => restaurant.id), :method => :patch %>
+    thumbs_up_path(:id => @restaurant.id), :method => :patch %>
   <%= link_to image_tag("thumbs_down.jpg", width: 20),
-    thumbs_down_path(:id => restaurant.id), :method => :patch %>
+    thumbs_down_path(:id => @restaurant.id), :method => :patch %>
 
   <% @restaurant.comment.each do |comment| %>
   	<tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-  		<td><%= user %></td>
-  		<td><%= comment %></td>
+  		<td><%= comment.user %></td>
+  		<td><%= comment.comment %></td>
   	</tr>
   <% end %>
 <% end %>
