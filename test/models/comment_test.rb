@@ -66,17 +66,4 @@ class CommentTest < ActiveSupport::TestCase
 
     assert_equal 6, Comment.count
   end
-
-  test "comment history for wiley returns one review, good bbq" do
-
-    assert_equal "", @wiley.comment
-  end
-
-  test "comment history for one returns zero" do
-    assert_equal "", Comment.comment_history(restaurants(:one))
-  end
-
-  test "comment history for joe returns two different reviews" do
-    assert_equal "", Comment.comment_history(@joe)
-  end
 end
