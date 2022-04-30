@@ -1,5 +1,16 @@
 <h1>Split the Check</h1>
 
+<% if user_signed_in? %>
+  <% if restaurant.is_favorite(current_user) %>
+    <%= link_to image_tag("filled_star.png", width: 20),
+      unfavorite_path(:id => restaurant.id), :method => :patch %>
+  <% else %>
+    <%= link_to image_tag("unfilled_star.png", width: 20),
+      favorite_path(:id => restaurant.id), :method => :patch %>
+  <% end %>
+<% end %>
+
+
 <p>
   Does <em><%= @restaurant.name %></em>,
   at <em><%= @restaurant.location %></em>,
@@ -15,10 +26,10 @@
 </p>
 
 <% if user_signed_in? %>
-  <td><%= link_to image_tag("thumbs_up.png", width: 20),
-    thumbs_up_path(:id => @restaurant.id), :method => :patch %></td>
-  <td><%= link_to image_tag("thumbs_down.jpg", width: 20),
-    thumbs_down_path(:id => @restaurant.id), :method => :patch %></td>
+  <%= link_to image_tag("thumbs_up.png", width: 20),
+    thumbs_up_path(:id => restaurant.id), :method => :patch %>
+  <%= link_to image_tag("thumbs_down.jpg", width: 20),
+    thumbs_down_path(:id => restaurant.id), :method => :patch %>
 <% end %>
 
 <%= link_to 'Back', restaurants_path %>
