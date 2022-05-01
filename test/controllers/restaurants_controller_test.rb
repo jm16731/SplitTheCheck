@@ -8,6 +8,8 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:admin)
     @thumbs_up_src = "/assets/thumbs_up-31deedd24365bb78a6a111e446096cedfc3d73bac7dce11130ec044cdf6c6880.png"
     @thumbs_down_src = "/assets/thumbs_down-513a3b5d910cefc9dcc20a90ca33b4bc572f4b6041ee234ecfe41282a1416730.jpg"
+    @filled_star_src = "/assets/filled_star-80c62e024c5e5e37888ea70d522ec4b57c8298c440181dafc25d51f6d833978f.png"
+    @unfilled_star_src = "/assets/unfilled_star-8a21ffa5d8591ead38e1eb8db1fdfbcb3802e3c73ce1cb6e4f602d94d5fe847a.png"
   end
 
   teardown do
@@ -231,23 +233,32 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "show page, logged in, should have header, back link, thumbs up/down" do
+  test "show page, logged in, has: header, back link, thumbs up/down, unfvaorite, comment history, new comment" do
     get restaurant_url(@restaurant)
     assert_select "h1", "Split the Check"
     assert_select "a", "Back"
     assert_select "img", count: 3
     assert_select "img" do
+      assert_select "[src=?]", @unfilled_star_src
     	assert_select "[src=?]", @thumbs_up_src
     	assert_select "[src=?]", @thumbs_down_src
     end
+    assert_select "table thead tr th", count: 2
+    assert_select "table tbody tr", count: 1
+    assert_select "table tbody tr td", count: 2 * 1
+    assert_select "input[type=submit]", 1
   end
 
-  test "show page, logged out should have header, back link, no thumbs up/down" do
+  test "show page, logged out, has: header, back link, no thumbs up/down, comment history, no new comment" do
     sign_out :user
     get restaurant_url(@restaurant)
     assert_select "h1", "Split the Check"
     assert_select "a", "Back"
     assert_select "img", count: 0
+    assert_select "table thead tr th", count: 2
+    assert_select "table tbody tr", count: 1
+    assert_select "table tbody tr td", count: 2 * 1
+    assert_select "input[type=submit]", 0
   end
 
   test "should get edit when logged in" do
