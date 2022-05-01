@@ -26,17 +26,17 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   test "index, logged in, has header, table, 7 columns" do
     get restaurants_url
     assert_select "h1", "Restaurants"
-    assert_select "table thead tr th", count: 5
+    assert_select "table thead tr th", count: 7
     assert_select "table tbody tr", count: 10
     assert_select "a", "Show", count: 10
-    assert_select "table tbody tr td", count: 7 * 10
+    assert_select "table tbody tr td", count: 8 * 10
   end
 
   test "index, logged out, has header, table, 5 columns" do
     sign_out :user
     get restaurants_url
     assert_select "h1", "Restaurants"
-    assert_select "table thead tr th", count: 5
+    assert_select "table thead tr th", count: 6
     assert_select "table tbody tr", count: 10
     assert_select "a", "Show", count: 10
     assert_select "table tbody tr td", count: 5 * 10
@@ -235,7 +235,7 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     get restaurant_url(@restaurant)
     assert_select "h1", "Split the Check"
     assert_select "a", "Back"
-    assert_select "img", count: 2
+    assert_select "img", count: 3
     assert_select "img" do
     	assert_select "[src=?]", @thumbs_up_src
     	assert_select "[src=?]", @thumbs_down_src
