@@ -6,6 +6,8 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @restaurant = restaurants(:joe)
     sign_in users(:admin)
+    @admin = users(:admin)
+
     @thumbs_up_src = "/assets/thumbs_up-31deedd24365bb78a6a111e446096cedfc3d73bac7dce11130ec044cdf6c6880.png"
     @thumbs_down_src = "/assets/thumbs_down-513a3b5d910cefc9dcc20a90ca33b4bc572f4b6041ee234ecfe41282a1416730.jpg"
     @filled_star_src = "/assets/filled_star-80c62e024c5e5e37888ea70d522ec4b57c8298c440181dafc25d51f6d833978f.png"
@@ -317,6 +319,14 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to :new_user_session
   end
 
+  test "cannot access thumbs up/down if logged out" do
+    sign_out :user
+    patch thumbs_up_path(:id => @restaurant.id)
+    assert_redirected_to :new_user_session
+    patch thumbs_down_path(:id => @restaurant.id)
+    assert_redirected_to :new_user_session
+  end
+
   test "thumbs_up should redirect and increase" do
     patch thumbs_up_path(:id => @restaurant.id)
     assert_redirected_to restaurants_url
@@ -458,5 +468,31 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert 2, Restaurant.all.
       order(:name).where("name like 'S'").count
     assert_select "table tbody tr", count: 2
+  end
+
+  test "favorite should create favorite" do
+    patch favorite_url(:id => @restaurant.id)
+    assert_redirected_to restaurants_url
+    assert_equal true, @restaurant.reload.is_favorite(@admin)
+    assert_equal "Restaurant favorited!", flash[:notice]
+  end
+
+  test "unfavorite should destroy favorite" do
+    patch unfavorite_url(:id => restaurants(:wiley).id)
+    assert_redirected_to restaurants_url
+    assert_equal false, restaurants(:wiley).reload.is_favorite(@admin)
+    assert_equal "Restaurant unfavorited!", flash[:notice]
+  end
+
+  test "cannot access fav and unfav if logged out" do
+    sign_out :user
+    patch unfavorite_url(:id => restaurants(:wiley).id)
+    assert_redirected_to :new_user_session
+    patch favorite_url(:id => @restaurant.id)
+    assert_redirected_to :new_user_session
+  end
+
+  test "new comment creates new comment" do
+
   end
 end
