@@ -492,7 +492,30 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to :new_user_session
   end
 
-  test "new comment creates new comment" do
+  test "cannot create new comment if logged out" do
+    sign_out :user
+    post new_comment_url, params: {
+      new_comment: "Lorem",
+      id: @restaurant.id
+    }
+    assert_redirected_to :new_user_session
+  end
 
+  test "new comment creates new comment" do
+    post new_comment_url, params: {
+    	new_comment: "Lorem",
+      id: @restaurant.id
+    }
+    assert_redirected_to restaurants_url
+    assert_equal "Comment submitted. Thank you!", flash[:notice]
+  end
+
+  test "cannot create new comment if blank" do
+    post new_comment_url, params: {
+    	new_comment: nil,
+      id: @restaurant.id
+    }
+    assert_redirected_to restaurants_url
+    assert_equal "Comment not submitted. Try again.", flash[:notice]
   end
 end

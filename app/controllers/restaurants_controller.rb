@@ -148,7 +148,7 @@ class RestaurantsController < ApplicationController
   end
 
   def new_comment
-    @comment = Comment.create!(
+    @comment = Comment.new(
       restaurant: @restaurant,
       user: current_user,
       comment: params[:new_comment]
