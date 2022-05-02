@@ -1,4 +1,37 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2><%= resource_name.to_s.humanize %> Profile</h2>
+
+<table class="center">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
+      <th>Favorite?</th>
+      <th><%= image_tag("thumbs_up.png", width: 20) %></th>
+      <th><%= image_tag("thumbs_down.jpg", width: 20) %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @restaurants.each do |restaurant| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= link_to restaurant.name, restaurant_path %></td>
+        <td><%= restaurant.location %></td>
+        <td><%= restaurant.total_thumbs_up %></td>
+        <td><%= restaurant.total_thumbs_down %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class="center">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
