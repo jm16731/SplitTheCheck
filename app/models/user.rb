@@ -19,4 +19,8 @@ class User < ApplicationRecord
   def favorite_restaurants
     Restaurant.joins(:favorite).where(favorites: { user: self })
   end
+
+  def voted_restaurants
+    Restaurant.joins(:vote).group(:id).where(votes: { user: self } )
+  end
 end
