@@ -4,7 +4,22 @@
   <thead>
     <tr>
       <th>Restaurant</th>
-      <th>Favorite?</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @restaurants.each do |restaurant| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= link_to restaurant.name, restaurant_path %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class="center">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
       <th><%= image_tag("thumbs_up.png", width: 20) %></th>
       <th><%= image_tag("thumbs_down.jpg", width: 20) %></th>
     </tr>
@@ -14,9 +29,8 @@
     <% @restaurants.each do |restaurant| %>
       <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
         <td><%= link_to restaurant.name, restaurant_path %></td>
-        <td><%= restaurant.location %></td>
-        <td><%= restaurant.total_thumbs_up %></td>
-        <td><%= restaurant.total_thumbs_down %></td>
+        <td></td>
+        <td></td>
       </tr>
     <% end %>
   </tbody>

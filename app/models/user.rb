@@ -16,7 +16,7 @@ class User < ApplicationRecord
   scope :search_by_user,
     -> (email) { where("email like ?", "#{email}%") }
 
-  def favorites
-    Favorite.where(user: self)
+  def favorite_restaurants
+    Restaurant.joins(:favorite).where(favorites: { user: self })
   end
 end

@@ -17,3 +17,7 @@ admin:
 dork:
   email: 'random@not_a_real_url.com'
   encrypted_password: 'needsabetterpasswrd'
+
+no_fav:
+  email: 'no_fav@not_a_real_url.com'
+  encrypted_password: 'ifoundyoufaker'
