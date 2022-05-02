@@ -19,6 +19,23 @@
   <thead>
     <tr>
       <th>Restaurant</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_user.comment_history.each do |comment| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= link_to comment.restaurant_id, restaurant_path(comment.restaurant_id) %></td>
+        <td><%= comment.comment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class="center">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
       <th><%= image_tag("thumbs_up.png", width: 20) %></th>
       <th><%= image_tag("thumbs_down.jpg", width: 20) %></th>
     </tr>

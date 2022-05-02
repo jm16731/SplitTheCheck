@@ -26,7 +26,7 @@ class UserTest < ActiveSupport::TestCase
   test "admin vote should 1 joe, 2 paula, -3 paula" do
     @restaurants = @admin.voted_restaurants
     assert_equal 2, @restaurants.length
-    
+
     @restaurants.each do |restaurant|
 
     end
@@ -34,6 +34,20 @@ class UserTest < ActiveSupport::TestCase
 
   test "no_fav should have no votes" do
     @restaurants = @no_fav.voted_restaurants
+    assert_equal 0, @restaurants.length
+  end
+
+  test "admin comment history should have 3 comments" do
+    @restaurants = @admin.comment_history
+    assert_equal 3, @restaurants.length
+
+    @restaurants.each do |restaurant|
+      
+    end
+  end
+
+  test "no_fav comment history should have 0 comments" do
+    @restaurants = @no_fav.comment_history
     assert_equal 0, @restaurants.length
   end
 end

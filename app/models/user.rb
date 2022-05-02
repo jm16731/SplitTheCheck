@@ -23,4 +23,8 @@ class User < ApplicationRecord
   def voted_restaurants
     Restaurant.joins(:vote).group(:id).where(votes: { user: self } )
   end
+
+  def comment_history
+    Comment.where(user: self)
+  end
 end
