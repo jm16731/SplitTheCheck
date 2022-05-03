@@ -15,42 +15,6 @@
   </tbody>
 </table>
 
-<table class="center">
-  <thead>
-    <tr>
-      <th>Restaurant</th>
-      <th>Comment</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% current_user.comment_history.each do |comment| %>
-      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-        <td><%= link_to comment.restaurant().name, restaurant_path(comment.restaurant_id) %></td>
-        <td><%= comment.comment %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<table class="center">
-  <thead>
-    <tr>
-      <th>Restaurant</th>
-      <th><%= image_tag("thumbs_up.png", width: 20) %></th>
-      <th><%= image_tag("thumbs_down.jpg", width: 20) %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% current_user.voted_restaurants.each do |restaurant| %>
-      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-        <td><%= link_to restaurant.name, restaurant_path(restaurant) %></td>
-        <td><%= restaurant.total_thumbs_up %></td>
-        <td><%= restaurant.total_thumbs_down %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -92,3 +56,39 @@
 <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
 <%= link_to "Back", :back %>
+
+<table class="center">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
+      <th><%= image_tag("thumbs_up.png", width: 20) %></th>
+      <th><%= image_tag("thumbs_down.jpg", width: 20) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_user.voted_restaurants.each do |restaurant| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= link_to restaurant.name, restaurant_path(restaurant) %></td>
+        <td><%= restaurant.total_thumbs_up %></td>
+        <td><%= restaurant.total_thumbs_down %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<table class="center">
+  <thead>
+    <tr>
+      <th>Restaurant</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_user.comment_history.each do |comment| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td><%= link_to comment.restaurant().name, restaurant_path(comment.restaurant_id) %></td>
+        <td><%= comment.comment %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
